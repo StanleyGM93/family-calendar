@@ -1,10 +1,7 @@
 import db from './connection'
 import { ListItem, ListUpdate, NewListItem } from '../../models/list'
 
-// shopping_list
-// users
-// appointments
-// family_members
+// table name = shopping_list
 
 // Shopping list route functions
 export function getAllListItems(): Promise<ListItem[]> {
