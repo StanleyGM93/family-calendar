@@ -1,65 +1,85 @@
 import express from 'express'
-import * as db from '../db/db.ts'
+import * as listDb from '../db/list-db.ts'
 
 const router = express.Router()
 
 // GET /list
-router.get('/', async (req, res, next) => {
+router.get('/', async (req, res) => {
   try {
-    const allListItems = await db.getAllListItems()
+    const allListItems = await listDb.getAllListItems()
     res.json(allListItems)
   } catch (e) {
     console.error(e)
-    next(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
   }
 })
 
 // Get /list/:itemId
-router.get('/:itemId', async (req, res, next) => {
+router.get('/:itemId', async (req, res) => {
   const itemId = Number(req.params.itemId)
   try {
-    const listItem = await db.getListItemById(itemId)
+    const listItem = await listDb.getListItemById(itemId)
     res.json(listItem)
   } catch (e) {
     console.error(e)
-    next(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
   }
 })
 
 // Patch /list/:itemId
-router.patch('/:itemId', async (req, res, next) => {
+router.patch('/:itemId', async (req, res) => {
   const itemId = Number(req.params.itemId)
   const updatedItem = req.body
   try {
-    await db.updateListItemById(itemId, updatedItem)
+    await listDb.updateListItemById(itemId, updatedItem)
     res.sendStatus(200)
   } catch (e) {
     console.error(e)
-    next(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
   }
 })
 
 // Post /list/item
-router.post('/item', async (req, res, next) => {
+router.post('/item', async (req, res) => {
   const itemToAdd = req.body
   try {
-    await db.addListItem(itemToAdd)
+    await listDb.addListItem(itemToAdd)
     res.sendStatus(201)
   } catch (e) {
     console.error(e)
-    next(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
   }
 })
 
 // Delete /list/:itemId
-router.delete('/:itemId', async (req, res, next) => {
+router.delete('/:itemId', async (req, res) => {
   const itemId = Number(req.params.itemId)
   try {
-    await db.deleteListItem(itemId)
-    res.sendStatus(200)
+    await listDb.deleteListItem(itemId)
+    res.sendStatus(204)
   } catch (e) {
     console.error(e)
-    next(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
   }
 })
 
