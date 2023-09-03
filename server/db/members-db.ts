@@ -1,8 +1,6 @@
 import db from './connection'
 import { NewMember, MemberUpdate, Member } from '../../models/family-members'
 
-// users
-// appointments
 // family_members
 
 export function getAllFamilyMembers(): Promise<Member[]> {

@@ -1,30 +1,86 @@
 import express from 'express'
+import * as appointmentsDb from '../db/appointments-db.ts'
 
 const router = express.Router()
 
 // GET /appointments
-router.get('/', (req, res) => {
-  res.send('Returns the appointments')
+router.get('/', async (req, res) => {
+  try {
+    const allAppointments = await appointmentsDb.getAllAppointments()
+    res.json(allAppointments)
+  } catch (e) {
+    console.error(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
+  }
 })
 
 // Get /appointments/:id
-router.get('/:id', (req, res) => {
-  res.send('Returns info on appointment')
+router.get('/:id', async (req, res) => {
+  const appointmentId = Number(req.params.id)
+  try {
+    const appointment = await appointmentsDb.getAppointmenById(appointmentId)
+    res.json(appointment)
+  } catch (e) {
+    console.error(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
+  }
 })
 
 // Patch /appointments/:id
-router.patch('/:id', (req, res, next) => {
-  res.send('Updates an appointment')
+router.patch('/:id', async (req, res) => {
+  const appointmentId = Number(req.params.id)
+  const updatedAppointment = req.body
+  try {
+    await appointmentsDb.updateAppointment(appointmentId, updatedAppointment)
+    res.sendStatus(200)
+  } catch (e) {
+    console.error(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
+  }
 })
 
 // Post /appointments/
-router.post('/', (req, res) => {
-  res.send('Adds a new appointment')
+router.post('/', async (req, res) => {
+  const newAppointment = req.body
+  try {
+    await appointmentsDb.addAppointment(newAppointment)
+    res.sendStatus(201)
+  } catch (e) {
+    console.error(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
+  }
 })
 
 // Delete /appointments/:id
-router.delete('/:id', (req, res) => {
-  res.send('removes an appointment')
+router.delete('/:id', async (req, res) => {
+  const appointmentId = Number(req.params.id)
+  try {
+    await appointmentsDb.deleteAppointment(appointmentId)
+    res.sendStatus(204)
+  } catch (e) {
+    console.error(e)
+    if (e instanceof Error) {
+      res.status(500).send(e.message)
+    } else {
+      res.status(500).send('An unexpected error occurred')
+    }
+  }
 })
 
 export default router
