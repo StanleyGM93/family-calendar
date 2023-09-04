@@ -18,7 +18,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Different routes set up
-server.use('/list', listRouter)
+server.use('/api/v1/list', listRouter)
 server.use('/appointments', appointmentsRouter)
 server.use('/members', membersRouter)
 

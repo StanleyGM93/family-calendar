@@ -1,10 +1,17 @@
+import NavBar from './NavBar.tsx'
+import ShoppingList from './ShoppingList.tsx'
+import NewItem from './NewItem.tsx'
+
 function App() {
   return (
     <>
       <header className="header">
-        <h1>My Collection</h1>
+        <NavBar />
       </header>
-      <section className="main">{/* add your code here */}</section>
+      <section className="main">
+        <NewItem />
+        <ShoppingList />
+      </section>
     </>
   )
 }
