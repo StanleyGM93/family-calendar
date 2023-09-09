@@ -1,7 +1,7 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import { ListItem } from '../../models/list'
+import type { ListItem } from '../../models/list'
 import { deleteListItem } from '../apis/list'
 import UpdateItem from './UpdateItem'
 

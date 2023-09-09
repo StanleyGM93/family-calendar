@@ -1,10 +1,5 @@
 import request from 'superagent'
-import {
-  ListItem,
-  ListUpdate,
-  NewListItem,
-  ListUpdatePayload,
-} from '../../models/list'
+import { ListItem, NewListItem, ListUpdatePayload } from '../../models/list'
 
 const url = '/api/v1/list/'
 

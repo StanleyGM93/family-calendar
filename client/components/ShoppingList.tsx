@@ -2,16 +2,18 @@ import { useQuery } from '@tanstack/react-query'
 
 import { getAllListItems } from '../apis/list.ts'
 import Item from './Item'
+import { ListItem } from '../../models/list.ts'
 
 function ShoppingList() {
   const {
     data: listItems,
     isLoading,
     isError,
-  } = useQuery(['list-items'], getAllListItems)
+    error,
+  } = useQuery<ListItem[], Error>(['list-items'], getAllListItems)
 
   if (isError) {
-    return <div>There was an error trying to get the shopping list</div>
+    return <div>There was an error: {error?.message}</div>
   }
 
   if (isLoading) {
