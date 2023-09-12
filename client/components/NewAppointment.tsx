@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query'
-import type { NewAppointment } from '../../models/appointments'
+import type { NewAppointment as NewAppointmentType } from '../../models/appointments'
 import { addAppointment } from '../apis/appointments'
 import { getAllFamilyMembers } from '../apis/members'
 import { Member } from '../../models/family-members'
@@ -13,7 +13,7 @@ const initialData = {
 }
 
 function NewAppointment() {
-  const [formData, setFormData] = useState<NewAppointment>(initialData)
+  const [formData, setFormData] = useState<NewAppointmentType>(initialData)
   const queryClient = useQueryClient()
   const newAppointmentMutation = useMutation(addAppointment, {
     onSuccess: () => queryClient.invalidateQueries(),
@@ -30,13 +30,19 @@ function NewAppointment() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
+    console.log(formData)
     newAppointmentMutation.mutate(formData)
     setFormData(initialData)
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     const { name, value } = event.target
-    setFormData({ ...formData, [name]: value })
+    setFormData({
+      ...formData,
+      [name]: name === 'memberId' ? parseInt(value, 10) : value,
+    })
   }
 
   const fetchOptions = members?.map((member) => (
@@ -48,8 +54,14 @@ function NewAppointment() {
   return (
     <form onSubmit={handleSubmit}>
       <h2>Add appointment</h2>
-      <label htmlFor="member">Family member:</label>
-      <select name="member" id="member">
+      <label htmlFor="memberId">Family member:</label>
+      <select
+        name="memberId"
+        id="memberId"
+        onChange={handleChange}
+        value={formData.memberId}
+      >
+        <option value="0">Select a family member</option>
         {fetchOptions}
       </select>
       <label htmlFor="dateTime">When:</label>
