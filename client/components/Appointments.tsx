@@ -21,7 +21,7 @@ function Appointments() {
   }
 
   if (!appointments) {
-    return <div>Could not retrieve shopping list</div>
+    return <div>Could not retrieve appointments</div>
   }
 
   const listItemsToRender = appointments.map((appointment) => (
