@@ -2,6 +2,7 @@ import NavBar from './NavBar.tsx'
 import ShoppingList from './ShoppingList.tsx'
 import NewItem from './NewItem.tsx'
 import Appointments from './Appointments.tsx'
+import NewAppointment from './NewAppointment.tsx'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <ShoppingList />
       </section>
       <section>
+        <NewAppointment />
         <Appointments />
       </section>
     </>
