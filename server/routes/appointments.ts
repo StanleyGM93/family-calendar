@@ -55,8 +55,8 @@ router.patch('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const newAppointment = req.body
   try {
-    await appointmentsDb.addAppointment(newAppointment)
-    res.sendStatus(201)
+    const returnAppt = await appointmentsDb.addAppointment(newAppointment)
+    res.send(returnAppt).status(201)
   } catch (e) {
     console.error(e)
     if (e instanceof Error) {

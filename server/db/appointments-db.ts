@@ -45,7 +45,7 @@ export function addAppointment(newAppointmentInfo: NewAppointment) {
     location,
     purpose,
   }
-  db('appointments').insert(infoToAdd)
+  return db('appointments').insert(infoToAdd).returning('*')
 }
 
 export function deleteAppointment(id: number) {

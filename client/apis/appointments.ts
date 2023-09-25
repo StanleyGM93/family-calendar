@@ -15,6 +15,8 @@ export async function addAppointment(newAppointment: NewAppointment) {
   const response = await request
     .post('/api/v1/appointments')
     .send(newAppointment)
+  console.log(newAppointment)
+  console.log(response.statusCode)
   return response.statusCode
 }
 

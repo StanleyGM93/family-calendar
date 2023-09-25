@@ -30,7 +30,6 @@ function NewAppointment() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    console.log(formData)
     newAppointmentMutation.mutate(formData)
     setFormData(initialData)
   }
