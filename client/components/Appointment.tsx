@@ -24,7 +24,9 @@ function Appointment({ appointment }: AppointmentProps) {
       <p>{appointment.dateTime}</p>
       <p>{appointment.location}</p>
       <p>{appointment.purpose}</p>
-      <button>✏️</button>
+      <Link to={`1`}>
+        <button>✏️</button>
+      </Link>
       <button onClick={handleDelete}>❌</button>
     </li>
   )
