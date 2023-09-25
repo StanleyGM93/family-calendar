@@ -8,7 +8,7 @@ export async function getAllAppointments() {
 
 export async function getAppointmentById(id: number) {
   const response = await request.get(`/api/v1/appointments/${id}`)
-  return response.body
+  return response.body[0]
 }
 
 export async function addAppointment(newAppointment: NewAppointment) {

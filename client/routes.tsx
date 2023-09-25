@@ -9,7 +9,7 @@ import UpdateAppointment from './components/UpdateAppointment.js'
 
 export const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
-    <Route path="/appointment/:id" element={<UpdateAppointment />} />
+    <Route path="/appointments/:id" element={<UpdateAppointment />} />
   </Route>
 )
 

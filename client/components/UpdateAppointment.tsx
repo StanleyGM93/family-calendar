@@ -1,27 +1,53 @@
 import { useState } from 'react'
-import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
 import { AppointmentUpdate } from '../../models/appointments.ts'
-import { updateAppointment } from '../apis/appointments.ts'
+import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 
 function UpdateAppointment() {
+  const { id } = useParams()
+  const {
+    data: appointmentToUpdate,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<AppointmentUpdate, Error>(['appointment'], () =>
+    getAppointmentById(Number(id))
+  )
+
   const initialFormData = {
-    item,
-    quantity,
+    memberId: appointmentToUpdate?.memberId,
+    dateTime: appointmentToUpdate?.dateTime,
+    location: appointmentToUpdate?.location,
+    purpose: appointmentToUpdate?.purpose,
   }
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateItemMutation = useMutation(updateAppointment, {
+  const updateAppointmentMutation = useMutation(updateAppointment, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
-  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
+  if (isError) {
+    return <div>There was an error: {error?.message}</div>
+  }
+
+  if (isLoading) {
+    return <div>Loading your shopping list</div>
+  }
+
+  if (!appointmentToUpdate) {
+    return <div>Could not retrieve shopping list</div>
+  }
+
+  function handleChange(
+    event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) {
     const { name, value } = event.target
     const updatedValues = {
       ...formData,
-      [name]: value,
+      [name]: name === 'memberId' ? parseInt(value, 10) : value,
     }
     setFormData(updatedValues)
   }
@@ -32,30 +58,45 @@ function UpdateAppointment() {
       id: listItem.id,
       data: formData,
     }
-    updateItemMutation.mutate(updatedListItemInfo)
-    onClose()
+    updateAppointmentMutation.mutate(updatedListItemInfo)
   }
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Edit Item:</h2>
-
-      <label htmlFor="item">Item:</label>
+      <h2>Edit Appointment</h2>
+      <label htmlFor="memberId">Family member:</label>
+      <select
+        name="memberId"
+        id="memberId"
+        onChange={handleChange}
+        value={formData.memberId}
+      >
+        <option value="0">Select a family member</option>
+        {fetchOptions}
+      </select>
+      <label htmlFor="dateTime">When:</label>
+      <input
+        type="datetime"
+        name="dateTime"
+        id="dateTime"
+        onChange={handleChange}
+        value={formData.dateTime}
+      />
+      <label htmlFor="location">Where:</label>
       <input
         type="text"
-        name="item"
-        id="item"
-        value={formData.item}
+        name="location"
+        id="location"
         onChange={handleChange}
+        value={formData.location}
       />
-
-      <label htmlFor="quantity">Quantity:</label>
+      <label htmlFor="purpose">Why:</label>
       <input
-        type="number"
-        name="quantity"
-        id="quantity"
-        value={formData.quantity}
+        type="text"
+        name="purpose"
+        id="purpose"
         onChange={handleChange}
+        value={formData.purpose}
       />
 
       <button type="submit">Update</button>
