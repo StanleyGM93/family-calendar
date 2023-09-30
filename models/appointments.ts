@@ -9,7 +9,7 @@ export interface Appointment extends NewAppointment {
   id: number
 }
 
-export interface AppointmentUpdate {
+export interface UpdatedAppointment {
   id: number
   data: NewAppointment
 }

@@ -1,5 +1,5 @@
 import request from 'superagent'
-import { AppointmentUpdate, NewAppointment } from '../../models/appointments'
+import { UpdatedAppointment, NewAppointment } from '../../models/appointments'
 
 export async function getAllAppointments() {
   const response = await request.get('/api/v1/appointments')
@@ -20,7 +20,9 @@ export async function addAppointment(newAppointment: NewAppointment) {
   return response.statusCode
 }
 
-export async function updateAppointment(updatedAppointment: AppointmentUpdate) {
+export async function updateAppointment(
+  updatedAppointment: UpdatedAppointment
+) {
   const { id, data } = updatedAppointment
   const response = await request.patch(`/api/v1/appointments/${id}`).send(data)
   return response.statusCode

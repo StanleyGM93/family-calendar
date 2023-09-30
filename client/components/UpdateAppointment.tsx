@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
-import { AppointmentUpdate } from '../../models/appointments.ts'
+import { Appointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 import { Member } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
@@ -14,7 +14,7 @@ function UpdateAppointment() {
     isLoading,
     isError,
     error,
-  } = useQuery<AppointmentUpdate, Error>(['appointment'], () =>
+  } = useQuery<Appointment, Error>(['appointment'], () =>
     getAppointmentById(Number(id))
   )
   const {
@@ -51,6 +51,8 @@ function UpdateAppointment() {
     return <div>Could not retrieve shopping list</div>
   }
 
+  console.log(appointmentToUpdate)
+
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -59,12 +61,14 @@ function UpdateAppointment() {
       ...formData,
       [name]: name === 'memberId' ? parseInt(value, 10) : value,
     }
+    console.log(initialFormData)
     setFormData(updatedValues)
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    updateAppointmentMutation.mutate(Number(id), formData)
+    const updatedForm = { id: Number(id), data: formData }
+    updateAppointmentMutation.mutate(updatedForm)
   }
 
   const fetchOptions = members?.map((member) => (

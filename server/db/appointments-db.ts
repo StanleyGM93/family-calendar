@@ -1,7 +1,7 @@
 import db from './connection'
 import {
   Appointment,
-  AppointmentUpdate,
+  UpdatedAppointment,
   NewAppointment,
 } from '../../models/appointments'
 
@@ -33,8 +33,16 @@ export function getAppointmenById(id: number) {
     .where('id', id)
 }
 
-export function updateAppointment(id: number, updatedInfo: AppointmentUpdate) {
-  return db('appointments').update(updatedInfo).where('id', id)
+export function updateAppointment(updatedInfo: UpdatedAppointment) {
+  const { id, data } = updatedInfo
+  const { memberId, dateTime, location, purpose } = data
+  const infoToUpdate = {
+    member_id: memberId,
+    date_time: dateTime,
+    location,
+    purpose,
+  }
+  return db('appointments').update(infoToUpdate).where('id', id)
 }
 
 export function addAppointment(newAppointmentInfo: NewAppointment) {
