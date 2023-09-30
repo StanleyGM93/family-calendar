@@ -65,7 +65,7 @@ function NewAppointment() {
       </select>
       <label htmlFor="dateTime">When:</label>
       <input
-        type="datetime"
+        type="datetime-local"
         name="dateTime"
         id="dateTime"
         onChange={handleChange}

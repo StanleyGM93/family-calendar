@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom'
 
 import { AppointmentUpdate } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
+import { Member } from '../../models/family-members.ts'
+import { getAllFamilyMembers } from '../apis/members.ts'
 
 function UpdateAppointment() {
   const { id } = useParams()
@@ -15,6 +17,12 @@ function UpdateAppointment() {
   } = useQuery<AppointmentUpdate, Error>(['appointment'], () =>
     getAppointmentById(Number(id))
   )
+  const {
+    data: members,
+    isLoading: membersLoading,
+    isError: membersIsError,
+    error: membersError,
+  } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
 
   const initialFormData = {
     memberId: appointmentToUpdate?.memberId,
@@ -29,15 +37,17 @@ function UpdateAppointment() {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
-  if (isError) {
-    return <div>There was an error: {error?.message}</div>
+  if (isError || membersIsError) {
+    return (
+      <div>There was an error: {error?.message || membersError?.message} </div>
+    )
   }
 
-  if (isLoading) {
+  if (isLoading || membersLoading) {
     return <div>Loading your shopping list</div>
   }
 
-  if (!appointmentToUpdate) {
+  if (!appointmentToUpdate || !members) {
     return <div>Could not retrieve shopping list</div>
   }
 
@@ -54,12 +64,14 @@ function UpdateAppointment() {
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const updatedListItemInfo = {
-      id: listItem.id,
-      data: formData,
-    }
-    updateAppointmentMutation.mutate(updatedListItemInfo)
+    updateAppointmentMutation.mutate(Number(id), formData)
   }
+
+  const fetchOptions = members?.map((member) => (
+    <option key={member.id} value={member.id}>
+      {member.name}
+    </option>
+  ))
 
   return (
     <form onSubmit={handleSubmit}>
@@ -71,12 +83,11 @@ function UpdateAppointment() {
         onChange={handleChange}
         value={formData.memberId}
       >
-        <option value="0">Select a family member</option>
         {fetchOptions}
       </select>
       <label htmlFor="dateTime">When:</label>
       <input
-        type="datetime"
+        type="datetime-local"
         name="dateTime"
         id="dateTime"
         onChange={handleChange}
