@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
 
@@ -25,10 +25,10 @@ function UpdateAppointment() {
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
 
   const initialFormData = {
-    memberId: appointmentToUpdate?.memberId,
-    dateTime: appointmentToUpdate?.dateTime,
-    location: appointmentToUpdate?.location,
-    purpose: appointmentToUpdate?.purpose,
+    memberId: appointmentToUpdate?.memberId || '',
+    dateTime: appointmentToUpdate?.dateTime || '',
+    location: appointmentToUpdate?.location || '',
+    purpose: appointmentToUpdate?.purpose || '',
   }
 
   const [formData, setFormData] = useState(initialFormData)
@@ -36,6 +36,17 @@ function UpdateAppointment() {
   const updateAppointmentMutation = useMutation(updateAppointment, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+
+  useEffect(() => {
+    if (appointmentToUpdate) {
+      setFormData({
+        memberId: appointmentToUpdate.memberId,
+        dateTime: appointmentToUpdate.dateTime,
+        location: appointmentToUpdate.location,
+        purpose: appointmentToUpdate.purpose,
+      })
+    }
+  }, [appointmentToUpdate, id])
 
   if (isError || membersIsError) {
     return (
@@ -50,8 +61,6 @@ function UpdateAppointment() {
   if (!appointmentToUpdate || !members) {
     return <div>Could not retrieve shopping list</div>
   }
-
-  console.log(appointmentToUpdate)
 
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -68,6 +77,7 @@ function UpdateAppointment() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = { id: Number(id), data: formData }
+    console.log(updatedForm)
     updateAppointmentMutation.mutate(updatedForm)
   }
 

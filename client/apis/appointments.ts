@@ -23,8 +23,9 @@ export async function addAppointment(newAppointment: NewAppointment) {
 export async function updateAppointment(
   updatedAppointment: UpdatedAppointment
 ) {
-  const { id, data } = updatedAppointment
-  const response = await request.patch(`/api/v1/appointments/${id}`).send(data)
+  const response = await request
+    .patch(`/api/v1/appointments/`)
+    .send(updatedAppointment)
   return response.statusCode
 }
 

@@ -34,12 +34,11 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// Patch /appointments/:id
-router.patch('/:id', async (req, res) => {
-  const appointmentId = Number(req.params.id)
+// Patch /appointments/
+router.patch('/', async (req, res) => {
   const updatedAppointment = req.body
   try {
-    await appointmentsDb.updateAppointment(appointmentId, updatedAppointment)
+    await appointmentsDb.updateAppointment(updatedAppointment)
     res.sendStatus(200)
   } catch (e) {
     console.error(e)
