@@ -1,23 +1,28 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
-import { deleteFamilyMember } from '../apis/members'
+import { deleteFamilyMember } from '../apis/members.ts'
+import type { Member as MemberType } from '../../models/family-members.ts'
 
-function Member() {
+interface MemberProps {
+  member: MemberType
+}
+
+function Member({ member }: MemberProps) {
   const queryClient = useQueryClient()
-  const deleteAppointmentMutation = useMutation(deleteFamilyMember, {
+  const deleteMemberMutation = useMutation(deleteFamilyMember, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
   function handleDelete() {
-    deleteAppointmentMutation.mutate(appointment.id)
+    deleteMemberMutation.mutate(member.id)
   }
 
   return (
     <li>
-      <p>{appointment.memberId}</p>
+      <p>{member.name}</p>
 
-      <Link to={`/appointments/${appointment.id}`}>
+      <Link to={`/member/${member.id}`}>
         <button>✏️</button>
       </Link>
       <button onClick={handleDelete}>❌</button>
