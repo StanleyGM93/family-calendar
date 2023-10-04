@@ -70,14 +70,21 @@ function UpdateAppointment() {
       ...formData,
       [name]: name === 'memberId' ? parseInt(value, 10) : value,
     }
-    console.log(initialFormData)
     setFormData(updatedValues)
   }
 
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    const updatedForm = { id: Number(id), data: formData }
-    console.log(updatedForm)
+    const updatedForm = {
+      id: Number(id),
+      data: {
+        ...formData,
+        memberId:
+          typeof formData.memberId === 'string'
+            ? parseInt(formData.memberId, 10)
+            : formData.memberId,
+      },
+    }
     updateAppointmentMutation.mutate(updatedForm)
   }
 
