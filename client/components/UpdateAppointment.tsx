@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { Appointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
@@ -9,6 +9,7 @@ import { getAllFamilyMembers } from '../apis/members.ts'
 
 function UpdateAppointment() {
   const { id } = useParams()
+  const navigate = useNavigate()
   const {
     data: appointmentToUpdate,
     isLoading,
@@ -86,6 +87,7 @@ function UpdateAppointment() {
       },
     }
     updateAppointmentMutation.mutate(updatedForm)
+    navigate('/')
   }
 
   const fetchOptions = members?.map((member) => (
