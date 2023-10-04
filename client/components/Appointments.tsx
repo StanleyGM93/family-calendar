@@ -1,8 +1,8 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getAllAppointments } from '../apis/appointments'
-import { Appointment as AppointmentType } from '../../models/appointments'
-import Appointment from './Appointment'
+import { getAllAppointments } from '../apis/appointments.ts'
+import { Appointment as AppointmentType } from '../../models/appointments.ts'
+import Appointment from './Appointment.tsx'
 
 function Appointments() {
   const {
