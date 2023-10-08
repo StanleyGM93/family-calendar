@@ -20,7 +20,9 @@ function Member({ member }: MemberProps) {
 
   return (
     <li>
-      <p>{member.name}</p>
+      <p>Name: {member.name}</p>
+      <p>D.O.B: {member.dateOfBirth}</p>
+      <p>Relationship: {member.relationship}</p>
 
       <Link to={`/member/${member.id}`}>
         <button>✏️</button>
