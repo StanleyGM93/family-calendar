@@ -4,7 +4,6 @@ import NewItem from './NewItem.tsx'
 import Appointments from './Appointments.tsx'
 import NewAppointment from './NewAppointment.tsx'
 import FamilyMembers from './FamilyMembers.tsx'
-import { Outlet } from 'react-router-dom'
 
 function App() {
   return (
@@ -19,7 +18,6 @@ function App() {
       <section>
         <NewAppointment />
         <Appointments />
-        {/* <Outlet /> */}
       </section>
       <section>
         <FamilyMembers />
