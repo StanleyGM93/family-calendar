@@ -4,6 +4,7 @@ import NewItem from './NewItem.tsx'
 import Appointments from './Appointments.tsx'
 import NewAppointment from './NewAppointment.tsx'
 import FamilyMembers from './FamilyMembers.tsx'
+import NewMember from './NewMember.tsx'
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Appointments />
       </section>
       <section>
+        <NewMember />
         <FamilyMembers />
       </section>
     </>
