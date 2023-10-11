@@ -60,6 +60,7 @@ function NewMember() {
           onChange={handleChange}
         />
       </div>
+      <button type="submit">Add family member</button>
     </form>
   )
 }
