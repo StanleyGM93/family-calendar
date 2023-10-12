@@ -54,7 +54,7 @@ function NewMember() {
         <label htmlFor="dob">Date of birth</label>
         <input
           type="date"
-          name="dob"
+          name="dateOfBirth"
           id="dob"
           value={formData.dateOfBirth}
           onChange={handleChange}
