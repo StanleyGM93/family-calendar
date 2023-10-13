@@ -3,7 +3,7 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
-import { Member as MemberType } from '../../models/family-members'
+import { Member as MemberType, MemberUpdate } from '../../models/family-members'
 
 function UpdateMember() {
   const { id } = useParams()
@@ -25,7 +25,7 @@ function UpdateMember() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateAppointmentMutation = useMutation(updateFamilyMember, {
+  const updateMemberMutation = useMutation(updateFamilyMember, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
@@ -51,7 +51,7 @@ function UpdateMember() {
     return <p>Could not retrieve family members</p>
   }
 
-  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+  function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
     const updatedValues = {
       ...formData,
@@ -60,18 +60,26 @@ function UpdateMember() {
     setFormData(updatedValues)
   }
 
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    const updatedForm = {
+      id: Number(id),
+      data: { ...formData },
+    }
+    updateMemberMutation.mutate(updatedForm)
+    navigate('/')
+  }
+
   return (
     <form onSubmit={handleSubmit}>
       <h2>Edit family member</h2>
       <label htmlFor="name">Name:</label>
-      <select
+      <input
         name="name"
         id="name"
         onChange={handleChange}
         value={formData.name}
-      >
-        {fetchOptions}
-      </select>
+      ></input>
       <label htmlFor="relationship">Relationship:</label>
       <input
         type="text"

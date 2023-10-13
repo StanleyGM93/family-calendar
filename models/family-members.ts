@@ -6,9 +6,8 @@ export interface NewMember {
 }
 
 export interface MemberUpdate {
-  name?: string
-  relationship?: string
-  dateOfBirth?: number
+  id: number
+  data: { name?: string; relationship?: string; dateOfBirth?: string }
 }
 
 export interface Member extends NewMember {

@@ -16,13 +16,9 @@ export async function addFamilyMember(newFamilyMember: NewMember) {
   return response.statusCode
 }
 
-export async function updateFamilyMember(
-  id: number,
-  updatedFamilyMember: MemberUpdate
-) {
-  const response = await request
-    .patch(`/api/v1/members/${id}`)
-    .send(updatedFamilyMember)
+export async function updateFamilyMember(updatedFamilyMember: MemberUpdate) {
+  const { id, data } = updatedFamilyMember
+  const response = await request.patch(`/api/v1/members/${id}`).send(data)
   return response.statusCode
 }
 
