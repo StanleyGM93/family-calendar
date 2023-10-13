@@ -51,7 +51,47 @@ function UpdateMember() {
     return <p>Could not retrieve family members</p>
   }
 
-  return 'Update member component'
+  function handleChange(event: React.ChangeEvent<HTMLSelectElement>) {
+    const { name, value } = event.target
+    const updatedValues = {
+      ...formData,
+      [name]: value,
+    }
+    setFormData(updatedValues)
+  }
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <h2>Edit family member</h2>
+      <label htmlFor="name">Name:</label>
+      <select
+        name="name"
+        id="name"
+        onChange={handleChange}
+        value={formData.name}
+      >
+        {fetchOptions}
+      </select>
+      <label htmlFor="relationship">Relationship:</label>
+      <input
+        type="text"
+        name="relationship"
+        id="relationship"
+        onChange={handleChange}
+        value={formData.relationship}
+      />
+      <label htmlFor="dob">Date of birth:</label>
+      <input
+        type="date"
+        name="dateOfBirth"
+        id="dob"
+        onChange={handleChange}
+        value={formData.dateOfBirth}
+      />
+
+      <button type="submit">Update</button>
+    </form>
+  )
 }
 
 export default UpdateMember
