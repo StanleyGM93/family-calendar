@@ -3,7 +3,7 @@ import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 
 import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
-import { Member as MemberType, MemberUpdate } from '../../models/family-members'
+import { Member as MemberType } from '../../models/family-members'
 
 function UpdateMember() {
   const { id } = useParams()

@@ -8,7 +8,7 @@ export async function getAllFamilyMembers() {
 
 export async function getFamilyMemberById(id: number) {
   const response = await request.get(`/api/v1/members/${id}`)
-  return response.body
+  return response.body[0]
 }
 
 export async function addFamilyMember(newFamilyMember: NewMember) {
