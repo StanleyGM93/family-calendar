@@ -9,9 +9,7 @@ export interface Appointment extends NewAppointment {
   id: number
 }
 
-export interface AppointmentUpdate {
-  memberId?: number
-  dateTime?: string
-  location?: string
-  purpose?: string
+export interface UpdatedAppointment {
+  id: number
+  data: NewAppointment
 }

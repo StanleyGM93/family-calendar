@@ -34,12 +34,11 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// Patch /appointments/:id
-router.patch('/:id', async (req, res) => {
-  const appointmentId = Number(req.params.id)
+// Patch /appointments/
+router.patch('/', async (req, res) => {
   const updatedAppointment = req.body
   try {
-    await appointmentsDb.updateAppointment(appointmentId, updatedAppointment)
+    await appointmentsDb.updateAppointment(updatedAppointment)
     res.sendStatus(200)
   } catch (e) {
     console.error(e)
@@ -55,8 +54,8 @@ router.patch('/:id', async (req, res) => {
 router.post('/', async (req, res) => {
   const newAppointment = req.body
   try {
-    await appointmentsDb.addAppointment(newAppointment)
-    res.sendStatus(201)
+    const returnAppt = await appointmentsDb.addAppointment(newAppointment)
+    res.send(returnAppt).status(201)
   } catch (e) {
     console.error(e)
     if (e instanceof Error) {

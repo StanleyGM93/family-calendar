@@ -1,27 +1,32 @@
 import request from 'superagent'
-import { ListUpdate, NewListItem } from '../../models/list'
+import { ListItem, NewListItem, ListUpdatePayload } from '../../models/list'
 
-export async function getAllListItems() {
-  const response = await request.get('/items')
+const url = '/api/v1/list/'
+
+export async function getAllListItems(): Promise<ListItem[]> {
+  const response = await request.get(url)
   return response.body
 }
 
 export async function getListItemById(id: number) {
-  const response = await request.get(`/items/${id}`)
+  const response = await request.get(`${url}${id}`)
   return response.body
 }
 
 export async function addListItem(newListItem: NewListItem) {
-  const response = await request.post('/items').send(newListItem)
+  const response = await request.post(`${url}/item`).send(newListItem)
   return response.statusCode
 }
 
-export async function updateListItem(id: number, updatedListItem: ListUpdate) {
-  const response = await request.patch(`/items/${id}`).send(updatedListItem)
+export async function updateListItem(
+  listItemInfo: ListUpdatePayload
+): Promise<number> {
+  const { id, data } = listItemInfo
+  const response = await request.patch(`${url}${id}`).send(data)
   return response.statusCode
 }
 
 export async function deleteListItem(id: number) {
-  const response = await request.delete(`/items/${id}`)
+  const response = await request.delete(`${url}${id}`)
   return response.statusCode
 }
