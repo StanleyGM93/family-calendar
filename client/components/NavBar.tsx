@@ -1,13 +1,15 @@
+import { Heading, Container, UnorderedList, ListItem } from '@chakra-ui/react'
+
 function NavBar() {
   return (
-    <div>
-      <h1>Family Calendar 📅</h1>
-      <ul>
-        <li>Family members</li>
-        <li>Appointments</li>
-        <li>Shopping list</li>
-      </ul>
-    </div>
+    <Container>
+      <Heading>Family Calendar 📅</Heading>
+      <UnorderedList>
+        <ListItem>Family members</ListItem>
+        <ListItem>Appointments</ListItem>
+        <ListItem>Shopping ListItemst</ListItem>
+      </UnorderedList>
+    </Container>
   )
 }
 
