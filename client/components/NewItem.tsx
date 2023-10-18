@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addListItem } from '../apis/list.ts'
+import { Button, Heading } from '@chakra-ui/react'
 
 const initialData = {
   item: '',
@@ -27,7 +28,7 @@ function NewItem() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add an item</h2>
+      <Heading as="h2">Add an item</Heading>
       <div className="form-item">
         <label htmlFor="item">Item:</label>
         <input
@@ -48,7 +49,7 @@ function NewItem() {
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Add item</button>
+      <Button type="submit">Add item</Button>
     </form>
   )
 }

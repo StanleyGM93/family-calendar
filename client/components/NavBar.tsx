@@ -3,7 +3,7 @@ import { Heading, Container, UnorderedList, ListItem } from '@chakra-ui/react'
 function NavBar() {
   return (
     <Container>
-      <Heading>Family Calendar 📅</Heading>
+      <Heading as="h1">Family Calendar 📅</Heading>
       <UnorderedList>
         <ListItem>Family members</ListItem>
         <ListItem>Appointments</ListItem>
