@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { NewMember as NewMemberType } from '../../models/family-members'
 import { addFamilyMember } from '../apis/members'
+import { Button, Heading } from '@chakra-ui/react'
 
 const initialData = {
   name: '',
@@ -29,7 +30,7 @@ function NewMember() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add Family Member</h2>
+      <Heading as="h2">Add Family Member</Heading>
       <div>
         <label htmlFor="name">Name</label>
         <input
@@ -60,7 +61,7 @@ function NewMember() {
           onChange={handleChange}
         />
       </div>
-      <button type="submit">Add family member</button>
+      <Button type="submit">Add family member</Button>
     </form>
   )
 }

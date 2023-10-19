@@ -4,6 +4,7 @@ import type { NewAppointment as NewAppointmentType } from '../../models/appointm
 import { addAppointment } from '../apis/appointments'
 import { getAllFamilyMembers } from '../apis/members'
 import { Member } from '../../models/family-members'
+import { Button, Heading } from '@chakra-ui/react'
 
 const initialData = {
   memberId: 0,
@@ -52,7 +53,7 @@ function NewAppointment() {
 
   return (
     <form onSubmit={handleSubmit}>
-      <h2>Add appointment</h2>
+      <Heading as="h2">Add appointment</Heading>
       <label htmlFor="memberId">Family member:</label>
       <select
         name="memberId"
@@ -87,7 +88,7 @@ function NewAppointment() {
         onChange={handleChange}
         value={formData.purpose}
       />
-      <button type="submit">Submit</button>
+      <Button type="submit">Submit</Button>
     </form>
   )
 }
