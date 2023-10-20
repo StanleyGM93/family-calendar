@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import type { Appointment as AppointmentType } from '../../models/appointments'
 import { deleteAppointment } from '../apis/appointments'
+import { ListItem, Text, Button } from '@chakra-ui/react'
 
 interface AppointmentProps {
   appointment: AppointmentType
@@ -19,16 +20,16 @@ function Appointment({ appointment }: AppointmentProps) {
   }
 
   return (
-    <li>
-      <p>{appointment.memberId}</p>
-      <p>{appointment.dateTime}</p>
-      <p>{appointment.location}</p>
-      <p>{appointment.purpose}</p>
+    <ListItem>
+      <Text>{appointment.memberId}</Text>
+      <Text>{appointment.dateTime}</Text>
+      <Text>{appointment.location}</Text>
+      <Text>{appointment.purpose}</Text>
       <Link to={`/appointments/${appointment.id}`}>
-        <button>✏️</button>
+        <Button>✏️</Button>
       </Link>
-      <button onClick={handleDelete}>❌</button>
-    </li>
+      <Button onClick={handleDelete}>❌</Button>
+    </ListItem>
   )
 }
 
