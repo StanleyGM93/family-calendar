@@ -1,12 +1,13 @@
 import { useQueryClient, useMutation } from '@tanstack/react-query'
 import { useState } from 'react'
 
-import type { ListItem } from '../../models/list'
+import type { ListItem as ListItemType } from '../../models/list'
 import { deleteListItem } from '../apis/list'
 import UpdateItem from './UpdateItem'
+import { ListItem, Text, Button } from '@chakra-ui/react'
 
 interface ItemProps {
-  listItem: ListItem
+  listItem: ListItemType
 }
 
 function Item({ listItem }: ItemProps) {
@@ -29,13 +30,13 @@ function Item({ listItem }: ItemProps) {
   }
 
   return (
-    <li>
-      <p>{listItem.item}</p>
-      <p>Quantity: {listItem.quantity}</p>
-      <button onClick={handleUpdate}>✏️</button>
-      <button onClick={handleDelete}>❌</button>
+    <ListItem>
+      <Text>{listItem.item}</Text>
+      <Text>Quantity: {listItem.quantity}</Text>
+      <Button onClick={handleUpdate}>✏️</Button>
+      <Button onClick={handleDelete}>❌</Button>
       {showUpdate && <UpdateItem listItem={listItem} onClose={closeUpdate} />}
-    </li>
+    </ListItem>
   )
 }
 

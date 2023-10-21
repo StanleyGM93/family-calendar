@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 
 import { deleteFamilyMember } from '../apis/members.ts'
 import type { Member as MemberType } from '../../models/family-members.ts'
+import { Button, ListItem, Text } from '@chakra-ui/react'
 
 interface MemberProps {
   member: MemberType
@@ -19,16 +20,16 @@ function Member({ member }: MemberProps) {
   }
 
   return (
-    <li>
-      <p>Name: {member.name}</p>
-      <p>D.O.B: {member.dateOfBirth}</p>
-      <p>Relationship: {member.relationship}</p>
+    <ListItem>
+      <Text>Name: {member.name}</Text>
+      <Text>D.O.B: {member.dateOfBirth}</Text>
+      <Text>Relationship: {member.relationship}</Text>
 
       <Link to={`/member/${member.id}`}>
-        <button>✏️</button>
+        <Button>✏️</Button>
       </Link>
-      <button onClick={handleDelete}>❌</button>
-    </li>
+      <Button onClick={handleDelete}>❌</Button>
+    </ListItem>
   )
 }
 
