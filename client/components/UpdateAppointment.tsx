@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useNavigate, Form } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 
 import { Appointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'

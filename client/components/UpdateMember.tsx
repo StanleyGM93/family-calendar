@@ -4,6 +4,14 @@ import { useParams, useNavigate } from 'react-router-dom'
 
 import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
 import { Member as MemberType } from '../../models/family-members'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react'
 
 function UpdateMember() {
   const { id } = useParams()
@@ -71,34 +79,41 @@ function UpdateMember() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit family member</h2>
-      <label htmlFor="name">Name:</label>
-      <input
-        name="name"
-        id="name"
-        onChange={handleChange}
-        value={formData.name}
-      ></input>
-      <label htmlFor="relationship">Relationship:</label>
-      <input
-        type="text"
-        name="relationship"
-        id="relationship"
-        onChange={handleChange}
-        value={formData.relationship}
-      />
-      <label htmlFor="dob">Date of birth:</label>
-      <input
-        type="date"
-        name="dateOfBirth"
-        id="dob"
-        onChange={handleChange}
-        value={formData.dateOfBirth}
-      />
-
-      <button type="submit">Update</button>
-    </form>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h3">Edit family member</Heading>
+        <FormControl>
+          <FormLabel htmlFor="name">Name:</FormLabel>
+          <Input
+            name="name"
+            id="name"
+            onChange={handleChange}
+            value={formData.name}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="relationship">Relationship:</FormLabel>
+          <Input
+            type="text"
+            name="relationship"
+            id="relationship"
+            onChange={handleChange}
+            value={formData.relationship}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="dob">Date of birth:</FormLabel>
+          <Input
+            type="date"
+            name="dateOfBirth"
+            id="dob"
+            onChange={handleChange}
+            value={formData.dateOfBirth}
+          />
+        </FormControl>
+        <Button type="submit">Update</Button>
+      </form>
+    </Box>
   )
 }
 
