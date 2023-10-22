@@ -3,6 +3,14 @@ import { useQueryClient, useMutation } from '@tanstack/react-query'
 
 import { ListItem } from '../../models/list'
 import { updateListItem } from '../apis/list'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react'
 
 interface UpdateItemProps {
   listItem: ListItem
@@ -41,29 +49,34 @@ function UpdateItem({ listItem, onClose }: UpdateItemProps) {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Item:</h2>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h3">Edit Item:</Heading>
 
-      <label htmlFor="item">Item:</label>
-      <input
-        type="text"
-        name="item"
-        id="item"
-        value={formData.item}
-        onChange={handleChange}
-      />
+        <FormControl mb={3}>
+          <FormLabel htmlFor="item">Item:</FormLabel>
+          <Input
+            type="text"
+            name="item"
+            id="item"
+            value={formData.item}
+            onChange={handleChange}
+          />
+        </FormControl>
 
-      <label htmlFor="quantity">Quantity:</label>
-      <input
-        type="number"
-        name="quantity"
-        id="quantity"
-        value={formData.quantity}
-        onChange={handleChange}
-      />
-
-      <button type="submit">Update</button>
-    </form>
+        <FormControl>
+          <FormLabel htmlFor="quantity">Quantity:</FormLabel>
+          <Input
+            type="number"
+            name="quantity"
+            id="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <Button type="submit">Update</Button>
+      </form>
+    </Box>
   )
 }
 

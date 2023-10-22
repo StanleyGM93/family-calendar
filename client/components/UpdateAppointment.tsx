@@ -6,6 +6,7 @@ import { Appointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 import { Member } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
+import { Box, FormLabel, Heading } from '@chakra-ui/react'
 
 function UpdateAppointment() {
   const { id } = useParams()
@@ -97,44 +98,46 @@ function UpdateAppointment() {
   ))
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Appointment</h2>
-      <label htmlFor="memberId">Family member:</label>
-      <select
-        name="memberId"
-        id="memberId"
-        onChange={handleChange}
-        value={formData.memberId}
-      >
-        {fetchOptions}
-      </select>
-      <label htmlFor="dateTime">When:</label>
-      <input
-        type="datetime-local"
-        name="dateTime"
-        id="dateTime"
-        onChange={handleChange}
-        value={formData.dateTime}
-      />
-      <label htmlFor="location">Where:</label>
-      <input
-        type="text"
-        name="location"
-        id="location"
-        onChange={handleChange}
-        value={formData.location}
-      />
-      <label htmlFor="purpose">Why:</label>
-      <input
-        type="text"
-        name="purpose"
-        id="purpose"
-        onChange={handleChange}
-        value={formData.purpose}
-      />
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <Heading>Edit Appointment</Heading>
+        <FormLabel htmlFor="memberId">Family member:</FormLabel>
+        <select
+          name="memberId"
+          id="memberId"
+          onChange={handleChange}
+          value={formData.memberId}
+        >
+          {fetchOptions}
+        </select>
+        <label htmlFor="dateTime">When:</label>
+        <input
+          type="datetime-local"
+          name="dateTime"
+          id="dateTime"
+          onChange={handleChange}
+          value={formData.dateTime}
+        />
+        <label htmlFor="location">Where:</label>
+        <input
+          type="text"
+          name="location"
+          id="location"
+          onChange={handleChange}
+          value={formData.location}
+        />
+        <label htmlFor="purpose">Why:</label>
+        <input
+          type="text"
+          name="purpose"
+          id="purpose"
+          onChange={handleChange}
+          value={formData.purpose}
+        />
 
-      <button type="submit">Update</button>
-    </form>
+        <button type="submit">Update</button>
+      </form>
+    </Box>
   )
 }
 
