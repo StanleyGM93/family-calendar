@@ -2,7 +2,14 @@ import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import type { NewMember as NewMemberType } from '../../models/family-members'
 import { addFamilyMember } from '../apis/members'
-import { Button, Heading } from '@chakra-ui/react'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react'
 
 const initialData = {
   name: '',
@@ -29,40 +36,42 @@ function NewMember() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Heading as="h2">Add Family Member</Heading>
-      <div>
-        <label htmlFor="name">Name</label>
-        <input
-          type="text"
-          name="name"
-          id="name"
-          value={formData.name}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="relationship">Relationship</label>
-        <input
-          type="text"
-          name="relationship"
-          id="relationship"
-          value={formData.relationship}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="dob">Date of birth</label>
-        <input
-          type="date"
-          name="dateOfBirth"
-          id="dob"
-          value={formData.dateOfBirth}
-          onChange={handleChange}
-        />
-      </div>
-      <Button type="submit">Add family member</Button>
-    </form>
+    <Box>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h2">Add Family Member</Heading>
+        <FormControl>
+          <FormLabel htmlFor="name">Name</FormLabel>
+          <Input
+            type="text"
+            name="name"
+            id="name"
+            value={formData.name}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="relationship">Relationship</FormLabel>
+          <Input
+            type="text"
+            name="relationship"
+            id="relationship"
+            value={formData.relationship}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="dob">Date of birth</FormLabel>
+          <Input
+            type="date"
+            name="dateOfBirth"
+            id="dob"
+            value={formData.dateOfBirth}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <Button type="submit">Add family member</Button>
+      </form>
+    </Box>
   )
 }
 
