@@ -14,7 +14,7 @@ function App() {
       <header className="header">
         <NavBar />
       </header>
-      <SimpleGrid p={2} spacing={4} minChildWidth="250px">
+      <SimpleGrid p={5} spacing={4} minChildWidth="250px" bg={'teal.100'}>
         <Box>
           <NewItem />
           <ShoppingList />
