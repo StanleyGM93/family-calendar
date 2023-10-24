@@ -4,7 +4,7 @@ import ColorToggleButton from './ColorMode'
 
 function NavBar() {
   return (
-    <Flex as="nav" p={5} borderBottom={'gray.300'}>
+    <Flex as="nav" p={5} borderBottom="1px">
       <Heading as="h1">Family Calendar 📅</Heading>
       <Spacer></Spacer>
       <HStack>
