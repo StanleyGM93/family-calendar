@@ -1,15 +1,14 @@
-import { Heading, Container, UnorderedList, ListItem } from '@chakra-ui/react'
+import { Heading, Flex, Button, Spacer, HStack } from '@chakra-ui/react'
 
 function NavBar() {
   return (
-    <Container>
+    <Flex as="nav" bg={'gray.200'}>
       <Heading as="h1">Family Calendar 📅</Heading>
-      <UnorderedList>
-        <ListItem>Family members</ListItem>
-        <ListItem>Appointments</ListItem>
-        <ListItem>Shopping ListItemst</ListItem>
-      </UnorderedList>
-    </Container>
+      <Spacer></Spacer>
+      <HStack>
+        <Button>Sign in</Button>
+      </HStack>
+    </Flex>
   )
 }
 
