@@ -1,5 +1,4 @@
 import {
-  Box,
   Button,
   Flex,
   HStack,
@@ -7,45 +6,32 @@ import {
   Spacer,
   Tab,
   TabList,
-  TabPanel,
-  TabPanels,
   Tabs,
 } from '@chakra-ui/react'
 
-import Appointments from './Appointments'
+import { Link } from 'react-router-dom'
 import ColorToggleButton from './ColorMode'
-import FamilyMembers from './FamilyMembers'
-import ShoppingList from './ShoppingList'
 
 function NavBar() {
   return (
     <Flex as="nav" p={5}>
       <Heading as="h1">Family Calendar 📅</Heading>
-
       <Tabs variant={'soft-rounded'}>
         <TabList>
-          <Tab>Dashboard</Tab>
-          <Tab>Shopping list</Tab>
-          <Tab>Appointments</Tab>
-          <Tab>Family Members</Tab>
+          <Link to={'/'}>
+            <Tab>Dashboard</Tab>
+          </Link>
+          <Link to={'/list'}>
+            <Tab>Shopping list</Tab>
+          </Link>
+          <Link to={'/appointments'}>
+            <Tab>Appointments</Tab>
+          </Link>
+          <Link to={'/members'}>
+            <Tab>Family members</Tab>
+          </Link>
         </TabList>
-
-        <TabPanels>
-          <TabPanel>
-            <Box>This is the dashboard</Box>
-          </TabPanel>
-          <TabPanel>
-            <ShoppingList />
-          </TabPanel>
-          <TabPanel>
-            <Appointments />
-          </TabPanel>
-          <TabPanel>
-            <FamilyMembers />
-          </TabPanel>
-        </TabPanels>
       </Tabs>
-
       <Spacer />
       <HStack>
         <ColorToggleButton />
