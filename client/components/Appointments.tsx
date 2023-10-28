@@ -3,7 +3,8 @@ import { useQuery } from '@tanstack/react-query'
 import { getAllAppointments } from '../apis/appointments.ts'
 import { Appointment as AppointmentType } from '../../models/appointments.ts'
 import Appointment from './Appointment.tsx'
-import { Box, Heading, UnorderedList } from '@chakra-ui/react'
+import { Box, Heading, UnorderedList, Button } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 
 function Appointments() {
   const {
@@ -33,6 +34,9 @@ function Appointments() {
     <Box>
       <Heading as="h2">Appointments</Heading>
       <UnorderedList>{listItemsToRender}</UnorderedList>
+      <Link to={'appointments/new'}>
+        <Button>Add appointment</Button>
+      </Link>
     </Box>
   )
 }
