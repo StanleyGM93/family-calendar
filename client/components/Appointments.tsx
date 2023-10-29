@@ -34,7 +34,7 @@ function Appointments() {
     <Box>
       <Heading as="h2">Appointments</Heading>
       <UnorderedList>{listItemsToRender}</UnorderedList>
-      <Link to={'appointments/new'}>
+      <Link to={'new'}>
         <Button>Add appointment</Button>
       </Link>
     </Box>
