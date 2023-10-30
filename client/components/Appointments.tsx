@@ -1,10 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getAllAppointments } from '../apis/appointments.ts'
-import { Appointment as AppointmentType } from '../../models/appointments.ts'
-import Appointment from './Appointment.tsx'
-import { Box, Heading, UnorderedList, Button } from '@chakra-ui/react'
+import { Box, Button, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
+import { Appointment as AppointmentType } from '../../models/appointments.ts'
+import { getAllAppointments } from '../apis/appointments.ts'
+import Appointment from './Appointment.tsx'
 
 function Appointments() {
   const {
@@ -31,9 +31,11 @@ function Appointments() {
   ))
 
   return (
-    <Box>
+    <Box p={4}>
       <Heading as="h2">Appointments</Heading>
-      <UnorderedList>{listItemsToRender}</UnorderedList>
+      <SimpleGrid minChildWidth="200px" spacing={5}>
+        {listItemsToRender}
+      </SimpleGrid>
       <Link to={'new'}>
         <Button>Add appointment</Button>
       </Link>
