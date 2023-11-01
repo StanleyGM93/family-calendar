@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getAllFamilyMembers } from '../apis/members.ts'
 import { Member as MemberType } from '../../models/family-members.ts'
 import Member from './Member.tsx'
-import { Box, Heading, UnorderedList } from '@chakra-ui/react'
+import { Box, Heading, SimpleGrid, UnorderedList } from '@chakra-ui/react'
 
 function FamilyMembers() {
   const {
@@ -32,7 +32,9 @@ function FamilyMembers() {
   return (
     <Box>
       <Heading as="h2">Family Members</Heading>
-      <UnorderedList>{listItemsToRender}</UnorderedList>
+      <SimpleGrid minChildWidth="200px" spacing={5}>
+        {listItemsToRender}
+      </SimpleGrid>
     </Box>
   )
 }
