@@ -4,7 +4,7 @@ import { useState } from 'react'
 import type { ListItem as ListItemType } from '../../models/list'
 import { deleteListItem } from '../apis/list'
 import UpdateItem from './UpdateItem'
-import { ListItem, Text, Button } from '@chakra-ui/react'
+import { ListItem, Text, Button, Heading } from '@chakra-ui/react'
 
 interface ItemProps {
   listItem: ListItemType
@@ -31,7 +31,7 @@ function Item({ listItem }: ItemProps) {
 
   return (
     <ListItem>
-      <Text>{listItem.item}</Text>
+      <Heading>{listItem.item}</Heading>
       <Text>Quantity: {listItem.quantity}</Text>
       <Button onClick={handleUpdate}>✏️</Button>
       <Button onClick={handleDelete}>❌</Button>

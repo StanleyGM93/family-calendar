@@ -1,9 +1,9 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { getAllFamilyMembers } from '../apis/members.ts'
+import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
 import { Member as MemberType } from '../../models/family-members.ts'
+import { getAllFamilyMembers } from '../apis/members.ts'
 import Member from './Member.tsx'
-import { Box, Heading, SimpleGrid, UnorderedList } from '@chakra-ui/react'
 
 function FamilyMembers() {
   const {
