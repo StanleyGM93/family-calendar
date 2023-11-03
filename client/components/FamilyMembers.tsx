@@ -1,6 +1,7 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Box, Heading, SimpleGrid } from '@chakra-ui/react'
+import { Box, Button, Center, Heading, SimpleGrid } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
 import { Member as MemberType } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
 import Member from './Member.tsx'
@@ -30,11 +31,16 @@ function FamilyMembers() {
   ))
 
   return (
-    <Box>
+    <Box p={10}>
       <Heading as="h2">Family Members</Heading>
-      <SimpleGrid minChildWidth="200px" spacing={5}>
+      <SimpleGrid minChildWidth="200px" spacing={5} m={5}>
         {listItemsToRender}
       </SimpleGrid>
+      <Center>
+        <Button p={6}>
+          <AddIcon boxSize={6} />
+        </Button>
+      </Center>
     </Box>
   )
 }

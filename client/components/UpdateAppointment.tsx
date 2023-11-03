@@ -106,7 +106,7 @@ function UpdateAppointment() {
   ))
 
   return (
-    <Box>
+    <Box p={10}>
       <form onSubmit={handleSubmit}>
         <Heading>Edit Appointment</Heading>
         <FormControl>

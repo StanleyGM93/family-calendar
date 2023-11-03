@@ -36,7 +36,7 @@ function NewMember() {
   }
 
   return (
-    <Box>
+    <Box p={10}>
       <form onSubmit={handleSubmit}>
         <Heading as="h2">Add Family Member</Heading>
         <FormControl>
