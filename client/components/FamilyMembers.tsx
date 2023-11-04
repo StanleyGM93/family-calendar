@@ -5,6 +5,7 @@ import { AddIcon } from '@chakra-ui/icons'
 import { Member as MemberType } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
 import Member from './Member.tsx'
+import { Link } from 'react-router-dom'
 
 function FamilyMembers() {
   const {
@@ -37,9 +38,11 @@ function FamilyMembers() {
         {listItemsToRender}
       </SimpleGrid>
       <Center>
-        <Button p={6}>
-          <AddIcon boxSize={6} />
-        </Button>
+        <Link to={'/appointments/new'}>
+          <Button p={6}>
+            <AddIcon boxSize={6} />
+          </Button>
+        </Link>
       </Center>
     </Box>
   )

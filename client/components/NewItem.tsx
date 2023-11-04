@@ -34,7 +34,7 @@ function NewItem() {
   }
 
   return (
-    <Box>
+    <Box p={10}>
       <form onSubmit={handleSubmit}>
         <Heading as="h2">Add an item</Heading>
         <FormControl>

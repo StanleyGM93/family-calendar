@@ -60,7 +60,7 @@ function NewAppointment() {
   ))
 
   return (
-    <Box>
+    <Box p={10}>
       <form onSubmit={handleSubmit}>
         <Heading as="h2">Add appointment</Heading>
         <FormControl>
@@ -105,7 +105,9 @@ function NewAppointment() {
             value={formData.purpose}
           />
         </FormControl>
-        <Button type="submit">Submit</Button>
+        <Button type="submit" mt={5}>
+          Submit
+        </Button>
       </form>
     </Box>
   )
