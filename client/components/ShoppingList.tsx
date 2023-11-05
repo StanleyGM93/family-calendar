@@ -1,11 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { Box, Heading, UnorderedList } from '@chakra-ui/react'
+import { ListItem } from '../../models/list.ts'
 import { getAllListItems } from '../apis/list.ts'
 import Item from './Item'
-import { ListItem } from '../../models/list.ts'
-import { Box, Button, Center, Heading, UnorderedList } from '@chakra-ui/react'
-import { Link } from 'react-router-dom'
-import { AddIcon } from '@chakra-ui/icons'
+import NewItem from './NewItem.tsx'
 
 function ShoppingList() {
   const {
@@ -34,14 +33,8 @@ function ShoppingList() {
   return (
     <Box>
       <Heading as="h2">Shopping List</Heading>
+      <NewItem />
       <UnorderedList m={5}>{listItemsToRender}</UnorderedList>
-      <Center>
-        <Link to={'/appointments/new'}>
-          <Button p={6}>
-            <AddIcon boxSize={6} />
-          </Button>
-        </Link>
-      </Center>
     </Box>
   )
 }

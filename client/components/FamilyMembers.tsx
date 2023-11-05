@@ -38,7 +38,7 @@ function FamilyMembers() {
         {listItemsToRender}
       </SimpleGrid>
       <Center>
-        <Link to={'/appointments/new'}>
+        <Link to={'/members/new'}>
           <Button p={6}>
             <AddIcon boxSize={6} />
           </Button>
