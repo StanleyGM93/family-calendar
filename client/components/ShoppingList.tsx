@@ -31,10 +31,12 @@ function ShoppingList() {
   ))
 
   return (
-    <Box>
+    <Box p={5}>
       <Heading as="h2">Shopping List</Heading>
       <NewItem />
-      <UnorderedList m={5}>{listItemsToRender}</UnorderedList>
+      <UnorderedList m={5} p={5}>
+        {listItemsToRender}
+      </UnorderedList>
     </Box>
   )
 }
