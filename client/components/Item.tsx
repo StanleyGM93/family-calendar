@@ -1,25 +1,15 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
+import { Button, Card, Flex, ListItem, Spacer, Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 import type { ListItem as ListItemType } from '../../models/list'
 import { deleteListItem } from '../apis/list'
-import UpdateItem from './UpdateItem'
-import {
-  ListItem,
-  Text,
-  Button,
-  Heading,
-  Flex,
-  Spacer,
-  Card,
-} from '@chakra-ui/react'
 
 interface ItemProps {
   listItem: ListItemType
 }
 
 function Item({ listItem }: ItemProps) {
-  const [showUpdate, setShowUpdate] = useState(false)
   const queryClient = useQueryClient()
   const deleteItemMutation = useMutation(deleteListItem, {
     onSuccess: () => queryClient.invalidateQueries(),
@@ -27,14 +17,6 @@ function Item({ listItem }: ItemProps) {
 
   function handleDelete() {
     deleteItemMutation.mutate(listItem.id)
-  }
-
-  function handleUpdate() {
-    setShowUpdate(true)
-  }
-
-  function closeUpdate() {
-    setShowUpdate(false)
   }
 
   return (
@@ -49,15 +31,12 @@ function Item({ listItem }: ItemProps) {
           <Text fontSize="xl" p={4}>
             Quantity: {listItem.quantity}
           </Text>
-          <Button onClick={handleUpdate} m={2}>
-            ✏️
-          </Button>
+          <Link to={`${listItem.id}`}>
+            <Button m={2}>✏️</Button>
+          </Link>
           <Button onClick={handleDelete} m={2}>
             ❌
           </Button>
-          {showUpdate && (
-            <UpdateItem listItem={listItem} onClose={closeUpdate} />
-          )}
         </Flex>
       </Card>
     </ListItem>
