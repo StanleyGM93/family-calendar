@@ -151,7 +151,9 @@ function UpdateAppointment() {
           />
         </FormControl>
 
-        <Button type="submit">Update</Button>
+        <Button type="submit" my={5}>
+          Update
+        </Button>
       </form>
     </Box>
   )

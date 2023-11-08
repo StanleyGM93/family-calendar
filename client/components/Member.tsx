@@ -27,7 +27,7 @@ function Member({ member }: MemberProps) {
   }
 
   return (
-    <Card>
+    <Card maxW={'sm'}>
       <CardHeader>
         <Text>Name: {member.name}</Text>
       </CardHeader>
