@@ -1,6 +1,6 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Box, Heading, UnorderedList } from '@chakra-ui/react'
+import { Box, Center, UnorderedList } from '@chakra-ui/react'
 import { ListItem } from '../../models/list.ts'
 import { getAllListItems } from '../apis/list.ts'
 import Item from './Item'
@@ -32,9 +32,11 @@ function ShoppingList() {
 
   return (
     <Box p={5}>
-      <Heading as="h2">Shopping List</Heading>
+      <Center as="h2" fontSize={'4xl'} fontWeight={'bold'}>
+        Shopping List
+      </Center>
       <NewItem />
-      <UnorderedList m={5} p={5}>
+      <UnorderedList m={5} px={5}>
         {listItemsToRender}
       </UnorderedList>
     </Box>

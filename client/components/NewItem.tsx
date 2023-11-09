@@ -34,9 +34,11 @@ function NewItem() {
   }
 
   return (
-    <Box p={10}>
+    <Box px={10}>
       <form onSubmit={handleSubmit}>
-        <Heading as="h2">Add an item</Heading>
+        <Heading as="h2" size={'lg'}>
+          Add an item
+        </Heading>
         <FormControl>
           <FormLabel htmlFor="item">Item:</FormLabel>
           <Input
@@ -57,7 +59,9 @@ function NewItem() {
             onChange={handleChange}
           />
         </FormControl>
-        <Button type="submit">Add item</Button>
+        <Button type="submit" my={5}>
+          Add item
+        </Button>
       </form>
     </Box>
   )
