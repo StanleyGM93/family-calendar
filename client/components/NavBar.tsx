@@ -14,7 +14,7 @@ import ColorToggleButton from './ColorMode'
 
 function NavBar() {
   return (
-    <Flex as="nav" p={5}>
+    <Flex as="nav" px={10} py={5}>
       <Heading as="h1">Family Calendar 📅</Heading>
       <Tabs variant={'soft-rounded'}>
         <TabList>

@@ -32,9 +32,9 @@ function Appointments() {
   ))
 
   return (
-    <Box p={4}>
+    <Box px={10}>
       <Heading as="h2">Appointments</Heading>
-      <SimpleGrid minChildWidth="200px" spacing={5} m={5}>
+      <SimpleGrid minChildWidth="200px" spacing={5} my={5}>
         {listItemsToRender}
       </SimpleGrid>
       <Center>

@@ -69,7 +69,9 @@ function NewMember() {
             onChange={handleChange}
           />
         </FormControl>
-        <Button type="submit">Add family member</Button>
+        <Button type="submit" my={5}>
+          Add family member
+        </Button>
       </form>
     </Box>
   )
