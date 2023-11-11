@@ -28,8 +28,8 @@ function Member({ member }: MemberProps) {
 
   return (
     <Card maxW={'sm'}>
-      <CardHeader>
-        <Text>Name: {member.name}</Text>
+      <CardHeader py={2}>
+        <Text fontSize={'xl'}> {member.name}</Text>
       </CardHeader>
       <CardBody>
         <Text>D.O.B: {member.dateOfBirth}</Text>

@@ -33,8 +33,10 @@ function FamilyMembers() {
 
   return (
     <Box p={10}>
-      <Heading as="h2">Family Members</Heading>
-      <SimpleGrid minChildWidth="200px" spacing={5} m={5}>
+      <Center as="h2" fontSize={'4xl'} fontWeight={'bold'}>
+        Family Members
+      </Center>
+      <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={5} my={5}>
         {listItemsToRender}
       </SimpleGrid>
       <Center>

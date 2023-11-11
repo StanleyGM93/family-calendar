@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Box, Button, Center, Heading, SimpleGrid } from '@chakra-ui/react'
+import { AddIcon } from '@chakra-ui/icons'
+import { Box, Button, Center, SimpleGrid } from '@chakra-ui/react'
 import { Link } from 'react-router-dom'
 import { Appointment as AppointmentType } from '../../models/appointments.ts'
 import { getAllAppointments } from '../apis/appointments.ts'
 import Appointment from './Appointment.tsx'
-import { AddIcon } from '@chakra-ui/icons'
 
 function Appointments() {
   const {
@@ -33,8 +33,10 @@ function Appointments() {
 
   return (
     <Box px={10}>
-      <Heading as="h2">Appointments</Heading>
-      <SimpleGrid minChildWidth="200px" spacing={5} my={5}>
+      <Center as="h2" fontSize={'4xl'} fontWeight={'bold'}>
+        Appointments
+      </Center>
+      <SimpleGrid columns={{ sm: 2, md: 3, lg: 4 }} spacing={5} my={5}>
         {listItemsToRender}
       </SimpleGrid>
       <Center>
