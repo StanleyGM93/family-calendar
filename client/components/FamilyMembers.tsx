@@ -1,11 +1,11 @@
 import { useQuery } from '@tanstack/react-query'
 
-import { Box, Button, Center, Heading, SimpleGrid } from '@chakra-ui/react'
 import { AddIcon } from '@chakra-ui/icons'
+import { Box, Button, Center, SimpleGrid } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
 import { Member as MemberType } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
 import Member from './Member.tsx'
-import { Link } from 'react-router-dom'
 
 function FamilyMembers() {
   const {

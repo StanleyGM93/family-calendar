@@ -11,18 +11,16 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
+import { useNavigate, useParams } from 'react-router-dom'
 
 interface UpdateItemProps {
   listItem: ListItem
   onClose: () => void
 }
 
-function UpdateItem({ listItem, onClose }: UpdateItemProps) {
-  const { item, quantity } = listItem
-  const initialFormData = {
-    item,
-    quantity,
-  }
+function UpdateItem() {
+  const { id } = useParams()
+  const navigate = useNavigate()
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
   const updateItemMutation = useMutation(updateListItem, {
@@ -45,7 +43,7 @@ function UpdateItem({ listItem, onClose }: UpdateItemProps) {
       data: formData,
     }
     updateItemMutation.mutate(updatedListItemInfo)
-    onClose()
+    navigate('/list')
   }
 
   return (

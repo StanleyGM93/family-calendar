@@ -75,7 +75,7 @@ function UpdateMember() {
       data: { ...formData },
     }
     updateMemberMutation.mutate(updatedForm)
-    navigate('/')
+    navigate('/members')
   }
 
   return (

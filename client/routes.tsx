@@ -5,15 +5,15 @@ import {
 } from 'react-router-dom'
 
 import App from './components/App.tsx'
-import UpdateAppointment from './components/UpdateAppointment.tsx'
-import UpdateMember from './components/UpdateMember.tsx'
 import Appointments from './components/Appointments.tsx'
-import NewAppointment from './components/NewAppointment.tsx'
+import Dashboard from './components/Dashboard.tsx'
 import FamilyMembers from './components/FamilyMembers.tsx'
+import NewAppointment from './components/NewAppointment.tsx'
 import NewMember from './components/NewMember.tsx'
 import ShoppingList from './components/ShoppingList.tsx'
-import NewItem from './components/NewItem.tsx'
-import Dashboard from './components/Dashboard.tsx'
+import UpdateAppointment from './components/UpdateAppointment.tsx'
+import UpdateItem from './components/UpdateItem.tsx'
+import UpdateMember from './components/UpdateMember.tsx'
 
 export const routes = createRoutesFromElements(
   <Route path="/" element={<App />}>
@@ -28,7 +28,7 @@ export const routes = createRoutesFromElements(
     <Route path="/members/:id" element={<UpdateMember />} />
 
     <Route path="list" element={<ShoppingList />} />
-    <Route path="list/:id" element={<NewItem />} />
+    <Route path="list/:id" element={<UpdateItem />} />
   </Route>
 )
 

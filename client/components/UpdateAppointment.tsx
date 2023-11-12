@@ -96,7 +96,7 @@ function UpdateAppointment() {
       },
     }
     updateAppointmentMutation.mutate(updatedForm)
-    navigate('/')
+    navigate('/appointments')
   }
 
   const fetchOptions = members?.map((member) => (
