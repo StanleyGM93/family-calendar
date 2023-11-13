@@ -52,7 +52,7 @@ function UpdateItem() {
   }
 
   return (
-    <Box>
+    <Box px={10}>
       <form onSubmit={handleSubmit}>
         <Heading as="h3">Edit Item:</Heading>
 
@@ -77,7 +77,9 @@ function UpdateItem() {
             onChange={handleChange}
           />
         </FormControl>
-        <Button type="submit">Update</Button>
+        <Button type="submit" my={5}>
+          Update
+        </Button>
       </form>
     </Box>
   )
