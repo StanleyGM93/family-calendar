@@ -1,8 +1,6 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useQueryClient, useMutation } from '@tanstack/react-query'
 
-import { ListItem } from '../../models/list'
-import { updateListItem } from '../apis/list'
 import {
   Box,
   Button,
@@ -12,15 +10,22 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useNavigate, useParams } from 'react-router-dom'
-
-interface UpdateItemProps {
-  listItem: ListItem
-  onClose: () => void
-}
+import { ListItem } from '../../models/list.ts'
+import { getListItemById, updateListItem } from '../apis/list'
 
 function UpdateItem() {
   const { id } = useParams()
   const navigate = useNavigate()
+  const { data: listItemData } = useQuery<ListItem, Error>(
+    ['appointment'],
+    () => getListItemById(Number(id))
+  )
+
+  const initialFormData = {
+    item: listItemData?.item || '',
+    quantity: listItemData?.quantity || 0,
+  }
+
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
   const updateItemMutation = useMutation(updateListItem, {
@@ -39,7 +44,7 @@ function UpdateItem() {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedListItemInfo = {
-      id: listItem.id,
+      id: Number(id),
       data: formData,
     }
     updateItemMutation.mutate(updatedListItemInfo)

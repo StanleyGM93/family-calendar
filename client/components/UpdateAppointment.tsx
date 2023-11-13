@@ -65,11 +65,11 @@ function UpdateAppointment() {
   }
 
   if (isLoading || membersLoading) {
-    return <div>Loading your shopping list</div>
+    return <div>Loading your appointments</div>
   }
 
   if (!appointmentToUpdate || !members) {
-    return <div>Could not retrieve shopping list</div>
+    return <div>Could not retrieve appointments</div>
   }
 
   function handleChange(
