@@ -4,6 +4,15 @@ import type { NewAppointment as NewAppointmentType } from '../../models/appointm
 import { addAppointment } from '../apis/appointments'
 import { getAllFamilyMembers } from '../apis/members'
 import { Member } from '../../models/family-members'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Select,
+} from '@chakra-ui/react'
 
 const initialData = {
   memberId: 0,
@@ -51,44 +60,56 @@ function NewAppointment() {
   ))
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add appointment</h2>
-      <label htmlFor="memberId">Family member:</label>
-      <select
-        name="memberId"
-        id="memberId"
-        onChange={handleChange}
-        value={formData.memberId}
-      >
-        <option value="0">Select a family member</option>
-        {fetchOptions}
-      </select>
-      <label htmlFor="dateTime">When:</label>
-      <input
-        type="datetime-local"
-        name="dateTime"
-        id="dateTime"
-        onChange={handleChange}
-        value={formData.dateTime}
-      />
-      <label htmlFor="location">Where:</label>
-      <input
-        type="text"
-        name="location"
-        id="location"
-        onChange={handleChange}
-        value={formData.location}
-      />
-      <label htmlFor="purpose">Why:</label>
-      <input
-        type="text"
-        name="purpose"
-        id="purpose"
-        onChange={handleChange}
-        value={formData.purpose}
-      />
-      <button type="submit">Submit</button>
-    </form>
+    <Box p={10}>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h2">Add appointment</Heading>
+        <FormControl>
+          <FormLabel htmlFor="memberId">Family member:</FormLabel>
+          <Select
+            name="memberId"
+            id="memberId"
+            onChange={handleChange}
+            value={formData.memberId}
+          >
+            <option value="0">Select a family member</option>
+            {fetchOptions}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="dateTime">When:</FormLabel>
+          <Input
+            type="datetime-local"
+            name="dateTime"
+            id="dateTime"
+            onChange={handleChange}
+            value={formData.dateTime}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="location">Where:</FormLabel>
+          <Input
+            type="text"
+            name="location"
+            id="location"
+            onChange={handleChange}
+            value={formData.location}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="purpose">Why:</FormLabel>
+          <Input
+            type="text"
+            name="purpose"
+            id="purpose"
+            onChange={handleChange}
+            value={formData.purpose}
+          />
+        </FormControl>
+        <Button type="submit" mt={5}>
+          Submit
+        </Button>
+      </form>
+    </Box>
   )
 }
 

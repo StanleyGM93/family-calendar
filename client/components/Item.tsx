@@ -1,16 +1,15 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import type { ListItem } from '../../models/list'
+import { Button, Card, Flex, ListItem, Spacer, Text } from '@chakra-ui/react'
+import { Link } from 'react-router-dom'
+import type { ListItem as ListItemType } from '../../models/list'
 import { deleteListItem } from '../apis/list'
-import UpdateItem from './UpdateItem'
 
 interface ItemProps {
-  listItem: ListItem
+  listItem: ListItemType
 }
 
 function Item({ listItem }: ItemProps) {
-  const [showUpdate, setShowUpdate] = useState(false)
   const queryClient = useQueryClient()
   const deleteItemMutation = useMutation(deleteListItem, {
     onSuccess: () => queryClient.invalidateQueries(),
@@ -20,22 +19,27 @@ function Item({ listItem }: ItemProps) {
     deleteItemMutation.mutate(listItem.id)
   }
 
-  function handleUpdate() {
-    setShowUpdate(true)
-  }
-
-  function closeUpdate() {
-    setShowUpdate(false)
-  }
-
   return (
-    <li>
-      <p>{listItem.item}</p>
-      <p>Quantity: {listItem.quantity}</p>
-      <button onClick={handleUpdate}>✏️</button>
-      <button onClick={handleDelete}>❌</button>
-      {showUpdate && <UpdateItem listItem={listItem} onClose={closeUpdate} />}
-    </li>
+    <ListItem as="li">
+      <Card>
+        <Flex alignItems={'center'}>
+          <Text fontSize="xl" p={4}>
+            {listItem.item}
+          </Text>
+          <Spacer />
+
+          <Text fontSize="xl" p={4}>
+            Quantity: {listItem.quantity}
+          </Text>
+          <Link to={`${listItem.id}`}>
+            <Button m={2}>✏️</Button>
+          </Link>
+          <Button onClick={handleDelete} m={2}>
+            ❌
+          </Button>
+        </Flex>
+      </Card>
+    </ListItem>
   )
 }
 

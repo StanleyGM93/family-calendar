@@ -1,20 +1,31 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
-import { useQueryClient, useMutation } from '@tanstack/react-query'
 
-import { ListItem } from '../../models/list'
-import { updateListItem } from '../apis/list'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { ListItem } from '../../models/list.ts'
+import { getListItemById, updateListItem } from '../apis/list'
 
-interface UpdateItemProps {
-  listItem: ListItem
-  onClose: () => void
-}
+function UpdateItem() {
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const { data: listItemData } = useQuery<ListItem, Error>(
+    ['appointment'],
+    () => getListItemById(Number(id))
+  )
 
-function UpdateItem({ listItem, onClose }: UpdateItemProps) {
-  const { item, quantity } = listItem
   const initialFormData = {
-    item,
-    quantity,
+    item: listItemData?.item || '',
+    quantity: listItemData?.quantity || 0,
   }
+
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
   const updateItemMutation = useMutation(updateListItem, {
@@ -33,37 +44,44 @@ function UpdateItem({ listItem, onClose }: UpdateItemProps) {
   function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedListItemInfo = {
-      id: listItem.id,
+      id: Number(id),
       data: formData,
     }
     updateItemMutation.mutate(updatedListItemInfo)
-    onClose()
+    navigate('/list')
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Item:</h2>
+    <Box px={10}>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h3">Edit Item:</Heading>
 
-      <label htmlFor="item">Item:</label>
-      <input
-        type="text"
-        name="item"
-        id="item"
-        value={formData.item}
-        onChange={handleChange}
-      />
+        <FormControl mb={3}>
+          <FormLabel htmlFor="item">Item:</FormLabel>
+          <Input
+            type="text"
+            name="item"
+            id="item"
+            value={formData.item}
+            onChange={handleChange}
+          />
+        </FormControl>
 
-      <label htmlFor="quantity">Quantity:</label>
-      <input
-        type="number"
-        name="quantity"
-        id="quantity"
-        value={formData.quantity}
-        onChange={handleChange}
-      />
-
-      <button type="submit">Update</button>
-    </form>
+        <FormControl>
+          <FormLabel htmlFor="quantity">Quantity:</FormLabel>
+          <Input
+            type="number"
+            name="quantity"
+            id="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <Button type="submit" my={5}>
+          Update
+        </Button>
+      </form>
+    </Box>
   )
 }
 

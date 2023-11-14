@@ -1,8 +1,16 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
-import { deleteFamilyMember } from '../apis/members.ts'
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Text,
+} from '@chakra-ui/react'
 import type { Member as MemberType } from '../../models/family-members.ts'
+import { deleteFamilyMember } from '../apis/members.ts'
 
 interface MemberProps {
   member: MemberType
@@ -19,16 +27,21 @@ function Member({ member }: MemberProps) {
   }
 
   return (
-    <li>
-      <p>Name: {member.name}</p>
-      <p>D.O.B: {member.dateOfBirth}</p>
-      <p>Relationship: {member.relationship}</p>
-
-      <Link to={`/member/${member.id}`}>
-        <button>✏️</button>
-      </Link>
-      <button onClick={handleDelete}>❌</button>
-    </li>
+    <Card maxW={'sm'}>
+      <CardHeader py={2}>
+        <Text fontSize={'xl'}> {member.name}</Text>
+      </CardHeader>
+      <CardBody>
+        <Text>D.O.B: {member.dateOfBirth}</Text>
+        <Text>Relationship: {member.relationship}</Text>
+      </CardBody>
+      <CardFooter>
+        <Link to={`/members/${member.id}`}>
+          <Button>✏️</Button>
+        </Link>
+        <Button onClick={handleDelete}>❌</Button>
+      </CardFooter>
+    </Card>
   )
 }
 

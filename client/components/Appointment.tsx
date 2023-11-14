@@ -1,6 +1,14 @@
-import { useQueryClient, useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 
+import {
+  Button,
+  Card,
+  CardBody,
+  CardFooter,
+  CardHeader,
+  Text,
+} from '@chakra-ui/react'
 import type { Appointment as AppointmentType } from '../../models/appointments'
 import { deleteAppointment } from '../apis/appointments'
 
@@ -19,16 +27,22 @@ function Appointment({ appointment }: AppointmentProps) {
   }
 
   return (
-    <li>
-      <p>{appointment.memberId}</p>
-      <p>{appointment.dateTime}</p>
-      <p>{appointment.location}</p>
-      <p>{appointment.purpose}</p>
-      <Link to={`/appointments/${appointment.id}`}>
-        <button>✏️</button>
-      </Link>
-      <button onClick={handleDelete}>❌</button>
-    </li>
+    <Card maxW="sm" p={3}>
+      <CardHeader>
+        <Text>{appointment.memberId}</Text>
+      </CardHeader>
+      <CardBody>
+        <Text>{appointment.dateTime}</Text>
+        <Text>{appointment.location}</Text>
+        <Text>{appointment.purpose}</Text>
+      </CardBody>
+      <CardFooter>
+        <Link to={`/appointments/${appointment.id}`}>
+          <Button>✏️</Button>
+        </Link>
+        <Button onClick={handleDelete}>❌</Button>
+      </CardFooter>
+    </Card>
   )
 }
 

@@ -8,9 +8,9 @@ export async function getAllListItems(): Promise<ListItem[]> {
   return response.body
 }
 
-export async function getListItemById(id: number) {
+export async function getListItemById(id: number): Promise<ListItem> {
   const response = await request.get(`${url}${id}`)
-  return response.body
+  return response.body[0]
 }
 
 export async function addListItem(newListItem: NewListItem) {

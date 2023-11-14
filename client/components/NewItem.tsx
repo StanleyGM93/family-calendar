@@ -1,6 +1,14 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { addListItem } from '../apis/list.ts'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+} from '@chakra-ui/react'
 
 const initialData = {
   item: '',
@@ -26,30 +34,36 @@ function NewItem() {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Add an item</h2>
-      <div className="form-item">
-        <label htmlFor="item">Item:</label>
-        <input
-          type="text"
-          name="item"
-          id="item"
-          value={formData.item}
-          onChange={handleChange}
-        />
-      </div>
-      <div>
-        <label htmlFor="quantity">Quantity:</label>
-        <input
-          type="number"
-          name="quantity"
-          id="quantity"
-          value={formData.quantity}
-          onChange={handleChange}
-        />
-      </div>
-      <button type="submit">Add item</button>
-    </form>
+    <Box px={10}>
+      <form onSubmit={handleSubmit}>
+        <Heading as="h2" size={'lg'}>
+          Add an item
+        </Heading>
+        <FormControl>
+          <FormLabel htmlFor="item">Item:</FormLabel>
+          <Input
+            type="text"
+            name="item"
+            id="item"
+            value={formData.item}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="quantity">Quantity:</FormLabel>
+          <Input
+            type="number"
+            name="quantity"
+            id="quantity"
+            value={formData.quantity}
+            onChange={handleChange}
+          />
+        </FormControl>
+        <Button type="submit" my={5}>
+          Add item
+        </Button>
+      </form>
+    </Box>
   )
 }
 

@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query'
 
+import { Box, Center, UnorderedList } from '@chakra-ui/react'
+import { ListItem } from '../../models/list.ts'
 import { getAllListItems } from '../apis/list.ts'
 import Item from './Item'
-import { ListItem } from '../../models/list.ts'
+import NewItem from './NewItem.tsx'
 
 function ShoppingList() {
   const {
@@ -29,10 +31,15 @@ function ShoppingList() {
   ))
 
   return (
-    <section>
-      <h2>Shopping List</h2>
-      <ul>{listItemsToRender}</ul>
-    </section>
+    <Box p={5}>
+      <Center as="h2" fontSize={'4xl'} fontWeight={'bold'}>
+        Shopping List
+      </Center>
+      <NewItem />
+      <UnorderedList m={5} px={5}>
+        {listItemsToRender}
+      </UnorderedList>
+    </Box>
   )
 }
 

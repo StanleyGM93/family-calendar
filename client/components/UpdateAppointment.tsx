@@ -6,6 +6,15 @@ import { Appointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 import { Member } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
+import {
+  Box,
+  Button,
+  FormControl,
+  FormLabel,
+  Heading,
+  Input,
+  Select,
+} from '@chakra-ui/react'
 
 function UpdateAppointment() {
   const { id } = useParams()
@@ -56,11 +65,11 @@ function UpdateAppointment() {
   }
 
   if (isLoading || membersLoading) {
-    return <div>Loading your shopping list</div>
+    return <div>Loading your appointments</div>
   }
 
   if (!appointmentToUpdate || !members) {
-    return <div>Could not retrieve shopping list</div>
+    return <div>Could not retrieve appointments</div>
   }
 
   function handleChange(
@@ -87,7 +96,7 @@ function UpdateAppointment() {
       },
     }
     updateAppointmentMutation.mutate(updatedForm)
-    navigate('/')
+    navigate('/appointments')
   }
 
   const fetchOptions = members?.map((member) => (
@@ -97,44 +106,56 @@ function UpdateAppointment() {
   ))
 
   return (
-    <form onSubmit={handleSubmit}>
-      <h2>Edit Appointment</h2>
-      <label htmlFor="memberId">Family member:</label>
-      <select
-        name="memberId"
-        id="memberId"
-        onChange={handleChange}
-        value={formData.memberId}
-      >
-        {fetchOptions}
-      </select>
-      <label htmlFor="dateTime">When:</label>
-      <input
-        type="datetime-local"
-        name="dateTime"
-        id="dateTime"
-        onChange={handleChange}
-        value={formData.dateTime}
-      />
-      <label htmlFor="location">Where:</label>
-      <input
-        type="text"
-        name="location"
-        id="location"
-        onChange={handleChange}
-        value={formData.location}
-      />
-      <label htmlFor="purpose">Why:</label>
-      <input
-        type="text"
-        name="purpose"
-        id="purpose"
-        onChange={handleChange}
-        value={formData.purpose}
-      />
+    <Box p={10}>
+      <form onSubmit={handleSubmit}>
+        <Heading>Edit Appointment</Heading>
+        <FormControl>
+          <FormLabel htmlFor="memberId">Family member:</FormLabel>
+          <Select
+            name="memberId"
+            id="memberId"
+            onChange={handleChange}
+            value={formData.memberId}
+          >
+            {fetchOptions}
+          </Select>
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="dateTime">When:</FormLabel>
+          <Input
+            type="datetime-local"
+            name="dateTime"
+            id="dateTime"
+            onChange={handleChange}
+            value={formData.dateTime}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="location">Where:</FormLabel>
+          <Input
+            type="text"
+            name="location"
+            id="location"
+            onChange={handleChange}
+            value={formData.location}
+          />
+        </FormControl>
+        <FormControl>
+          <FormLabel htmlFor="purpose">Why:</FormLabel>
+          <Input
+            type="text"
+            name="purpose"
+            id="purpose"
+            onChange={handleChange}
+            value={formData.purpose}
+          />
+        </FormControl>
 
-      <button type="submit">Update</button>
-    </form>
+        <Button type="submit" my={5}>
+          Update
+        </Button>
+      </form>
+    </Box>
   )
 }
 
