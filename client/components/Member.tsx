@@ -36,7 +36,7 @@ function Member({ member }: MemberProps) {
         <Text>Relationship: {member.relationship}</Text>
       </CardBody>
       <CardFooter>
-        <Link to={`/member/${member.id}`}>
+        <Link to={`/members/${member.id}`}>
           <Button>✏️</Button>
         </Link>
         <Button onClick={handleDelete}>❌</Button>

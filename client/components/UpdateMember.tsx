@@ -79,7 +79,7 @@ function UpdateMember() {
   }
 
   return (
-    <Box>
+    <Box px={10}>
       <form onSubmit={handleSubmit}>
         <Heading as="h3">Edit family member</Heading>
         <FormControl>
@@ -111,7 +111,9 @@ function UpdateMember() {
             value={formData.dateOfBirth}
           />
         </FormControl>
-        <Button type="submit">Update</Button>
+        <Button type="submit" my={5}>
+          Update
+        </Button>
       </form>
     </Box>
   )
