@@ -30,6 +30,7 @@
     ]
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.3",
     "@chakra-ui/icons": "^2.1.1",
     "@chakra-ui/react": "^2.8.1",
     "@devacademy/eslint-config": "^1.9.1",
