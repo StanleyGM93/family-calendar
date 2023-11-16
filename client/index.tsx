@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     <Auth0Provider
       domain="mako-stanley.au.auth0.com"
       clientId="FNfCsIaz3mOqNJUtePFquZDhV0HKfANa"
+      authorizationParams={{ redirect_uri: window.location.origin }}
     >
       <ChakraProvider>
         <QueryClientProvider client={queryClient}>
