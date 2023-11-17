@@ -8,11 +8,15 @@ import {
   TabList,
   Tabs,
 } from '@chakra-ui/react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 import { Link } from 'react-router-dom'
 import ColorToggleButton from './ColorMode'
+import { IfAuthenticated, IfNotAuthenticated } from './Authenticated.tsx'
 
 function NavBar() {
+  const { logout, loginWithRedirect, user } = useAuth0()
+
   return (
     <Flex as="nav" px={10} py={5}>
       <Heading as="h1">Family Calendar 📅</Heading>
