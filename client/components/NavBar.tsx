@@ -7,6 +7,7 @@ import {
   Tab,
   TabList,
   Tabs,
+  Text,
 } from '@chakra-ui/react'
 import { useAuth0 } from '@auth0/auth0-react'
 
@@ -16,6 +17,14 @@ import { IfAuthenticated, IfNotAuthenticated } from './Authenticated.tsx'
 
 function NavBar() {
   const { logout, loginWithRedirect, user } = useAuth0()
+
+  function handleSignOut() {
+    logout()
+  }
+
+  function handleSignIn() {
+    loginWithRedirect()
+  }
 
   return (
     <Flex as="nav" px={10} py={5}>
@@ -39,7 +48,13 @@ function NavBar() {
       <Spacer />
       <HStack>
         <ColorToggleButton />
-        <Button>Sign in</Button>
+        <IfAuthenticated>
+          <Button onClick={handleSignOut}>Sign out</Button>
+          {user && <Text>Signed in as: {user?.nickname}</Text>}
+        </IfAuthenticated>
+        <IfNotAuthenticated>
+          <Button onClick={handleSignIn}>Sign in</Button>
+        </IfNotAuthenticated>
       </HStack>
     </Flex>
   )
