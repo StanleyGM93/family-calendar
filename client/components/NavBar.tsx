@@ -50,7 +50,7 @@ function NavBar() {
         <ColorToggleButton />
         <IfAuthenticated>
           <Button onClick={handleSignOut}>Sign out</Button>
-          {user && <Text>Signed in as: {user?.nickname}</Text>}
+          {user && <Text>Signed in as: {user.given_name}</Text>}
         </IfAuthenticated>
         <IfNotAuthenticated>
           <Button onClick={handleSignIn}>Sign in</Button>
