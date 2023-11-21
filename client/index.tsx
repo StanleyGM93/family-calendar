@@ -4,10 +4,12 @@ import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { RouterProvider } from 'react-router-dom'
 import { ChakraProvider } from '@chakra-ui/react'
 import { Auth0Provider } from '@auth0/auth0-react'
+import { createContext } from 'react'
 
 import { router } from './routes.tsx'
 
 const queryClient = new QueryClient()
+const AuthContext = createContext(null)
 
 document.addEventListener('DOMContentLoaded', () => {
   createRoot(document.getElementById('app') as HTMLElement).render(
