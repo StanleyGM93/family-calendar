@@ -17,14 +17,14 @@ document.addEventListener('DOMContentLoaded', () => {
       clientId="FNfCsIaz3mOqNJUtePFquZDhV0HKfANa"
       authorizationParams={{ redirect_uri: window.location.origin }}
     >
-      <AuthContext.Provider value={}>
-        <ChakraProvider>
-          <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-            <ReactQueryDevtools />
-          </QueryClientProvider>
-        </ChakraProvider>
-      </AuthContext.Provider>
+      {/* <AuthContext.Provider value={}> */}
+      <ChakraProvider>
+        <QueryClientProvider client={queryClient}>
+          <RouterProvider router={router} />
+          <ReactQueryDevtools />
+        </QueryClientProvider>
+      </ChakraProvider>
+      {/* </AuthContext.Provider> */}
     </Auth0Provider>
   )
 })
