@@ -12,6 +12,7 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
+import { useUser } from '../index.tsx'
 
 function UpdateMember() {
   const { id } = useParams()
@@ -24,6 +25,9 @@ function UpdateMember() {
   } = useQuery<MemberType, Error>(['member'], () =>
     getFamilyMemberById(Number(id))
   )
+  const user = useUser()
+  console.log('Below is the member user')
+  console.log(user)
 
   const initialFormData = {
     name: memberToUpdate?.name || '',

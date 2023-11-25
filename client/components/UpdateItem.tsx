@@ -12,6 +12,7 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { ListItem } from '../../models/list.ts'
 import { getListItemById, updateListItem } from '../apis/list'
+import { useUser } from '../index.tsx'
 
 function UpdateItem() {
   const { id } = useParams()
@@ -20,6 +21,9 @@ function UpdateItem() {
     ['appointment'],
     () => getListItemById(Number(id))
   )
+  const user = useUser()
+  console.log('Below is the list item user')
+  console.log(user)
 
   const initialFormData = {
     item: listItemData?.item || '',
