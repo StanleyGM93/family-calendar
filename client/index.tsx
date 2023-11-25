@@ -14,6 +14,11 @@ export function useUser() {
   return useContext(UserContext)
 }
 
+function AuthProvider({ children }: any) {
+  const { user } = useAuth0()
+  return <UserContext.Provider value={user}>{children}</UserContext.Provider>
+}
+
 const queryClient = new QueryClient()
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -23,14 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
       clientId="FNfCsIaz3mOqNJUtePFquZDhV0HKfANa"
       authorizationParams={{ redirect_uri: window.location.origin }}
     >
-      <UserContext.Provider value={useAuth0().user}>
+      <AuthProvider>
         <ChakraProvider>
           <QueryClientProvider client={queryClient}>
             <RouterProvider router={router} />
             <ReactQueryDevtools />
           </QueryClientProvider>
         </ChakraProvider>
-      </UserContext.Provider>
+      </AuthProvider>
     </Auth0Provider>
   )
 })

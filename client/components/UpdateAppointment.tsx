@@ -15,8 +15,12 @@ import {
   Input,
   Select,
 } from '@chakra-ui/react'
+import { useUser } from '../index.tsx'
 
 function UpdateAppointment() {
+  const user = useUser()
+  console.log('Below is the user')
+  console.log(user)
   const { id } = useParams()
   const navigate = useNavigate()
   const {

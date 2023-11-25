@@ -8,8 +8,6 @@ interface Props {
   children: React.ReactNode
 }
 export function IfAuthenticated(props: Props) {
-  const { user } = useAuth0()
-  console.log(user)
   const { children } = props
   return useIsAuthenticated() ? <>{children}</> : null
 }
