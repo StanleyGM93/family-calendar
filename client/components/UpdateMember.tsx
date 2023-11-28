@@ -13,6 +13,7 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useUser } from '../index.tsx'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function UpdateMember() {
   const { id } = useParams()
@@ -25,9 +26,8 @@ function UpdateMember() {
   } = useQuery<MemberType, Error>(['member'], () =>
     getFamilyMemberById(Number(id))
   )
-  const user = useUser()
-  console.log('Below is the member user')
-  console.log(user)
+  // Auth0 info
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     name: memberToUpdate?.name || '',
@@ -72,12 +72,14 @@ function UpdateMember() {
     setFormData(updatedValues)
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = {
       id: Number(id),
       data: { ...formData },
     }
+    const token = await getAccessTokenSilently()
+    console.log(token)
     updateMemberMutation.mutate(updatedForm)
     navigate('/members')
   }
