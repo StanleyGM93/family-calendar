@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
 import { useNavigate, useParams } from 'react-router-dom'
 import { ListItem } from '../../models/list.ts'
 import { getListItemById, updateListItem } from '../apis/list'
-import { useUser } from '../index.tsx'
 
 function UpdateItem() {
   const { id } = useParams()
@@ -21,9 +21,7 @@ function UpdateItem() {
     ['appointment'],
     () => getListItemById(Number(id))
   )
-  const user = useUser()
-  console.log('Below is the list item user')
-  console.log(user)
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     item: listItemData?.item || '',
@@ -45,12 +43,14 @@ function UpdateItem() {
     setFormData(updatedValues)
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedListItemInfo = {
       id: Number(id),
       data: formData,
     }
+    const token = await getAccessTokenSilently()
+    console.log(token)
     updateItemMutation.mutate(updatedListItemInfo)
     navigate('/list')
   }
