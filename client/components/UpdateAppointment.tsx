@@ -15,12 +15,9 @@ import {
   Input,
   Select,
 } from '@chakra-ui/react'
-import { useUser } from '../index.tsx'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function UpdateAppointment() {
-  const user = useUser()
-  console.log('Below is the appt user')
-  console.log(user)
   const { id } = useParams()
   const navigate = useNavigate()
   const {
@@ -37,6 +34,7 @@ function UpdateAppointment() {
     isError: membersIsError,
     error: membersError,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     memberId: appointmentToUpdate?.memberId || '',
@@ -99,6 +97,8 @@ function UpdateAppointment() {
             : formData.memberId,
       },
     }
+    const token = await getAccessTokenSilently()
+    console.log(token)
     updateAppointmentMutation.mutate(updatedForm)
     navigate('/appointments')
   }

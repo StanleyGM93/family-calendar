@@ -1,9 +1,8 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
-import { Member as MemberType } from '../../models/family-members'
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Box,
   Button,
@@ -12,8 +11,8 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
-import { useUser } from '../index.tsx'
-import { useAuth0 } from '@auth0/auth0-react'
+import { Member as MemberType } from '../../models/family-members'
+import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
 
 function UpdateMember() {
   const { id } = useParams()
