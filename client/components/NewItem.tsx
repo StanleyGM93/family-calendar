@@ -9,6 +9,7 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const initialData = {
   item: '',
@@ -21,15 +22,20 @@ function NewItem() {
   const newItemMutation = useMutation(addListItem, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+  // Auth0 info
+  const { getAccessTokenSilently } = useAuth0()
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     newItemMutation.mutate(formData)
+    const token = await getAccessTokenSilently()
+    console.log(token)
+
     setFormData(initialData)
   }
 

@@ -13,6 +13,7 @@ import {
   Input,
   Select,
 } from '@chakra-ui/react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const initialData = {
   memberId: 0,
@@ -32,14 +33,19 @@ function NewAppointment() {
     isError,
     error,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
+  // Auth0 info
+  const { getAccessTokenSilently } = useAuth0()
 
   if (isError) {
     return <div>There was an error: {error?.message}</div>
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     newAppointmentMutation.mutate(formData)
+    const token = await getAccessTokenSilently()
+    console.log(token)
+
     setFormData(initialData)
   }
 
