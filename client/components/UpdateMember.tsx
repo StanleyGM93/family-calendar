@@ -26,7 +26,7 @@ function UpdateMember() {
     getFamilyMemberById(Number(id))
   )
   // Auth0 info
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
 
   const initialFormData = {
     name: memberToUpdate?.name || '',
@@ -79,7 +79,7 @@ function UpdateMember() {
     }
     const token = await getAccessTokenSilently()
     console.log(token)
-    updateMemberMutation.mutate(updatedForm)
+    updateMemberMutation.mutate(updatedForm, token, user?.email)
     navigate('/members')
   }
 
