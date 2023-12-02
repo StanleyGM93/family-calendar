@@ -11,7 +11,7 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
-import { Member as MemberType } from '../../models/family-members'
+import { Member as MemberType, MemberUpdate } from '../../models/family-members'
 import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
 
 function UpdateMember() {
@@ -36,7 +36,7 @@ function UpdateMember() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateMemberMutation = useMutation(updateFamilyMember, {
+  const updateMemberMutation = useMutation(updateFamilyMemberWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
@@ -62,6 +62,14 @@ function UpdateMember() {
     return <p>Could not retrieve family members</p>
   }
 
+  async function updateFamilyMemberWrapper(
+    updatedFamilyMember: MemberUpdate
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return updateFamilyMember(updatedFamilyMember, token, userEmail)
+  }
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
     const updatedValues = {
@@ -74,12 +82,11 @@ function UpdateMember() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = {
-      id: Number(id),
-      data: { ...formData },
+      data: { id: Number(id), ...formData },
     }
     const token = await getAccessTokenSilently()
     console.log(token)
-    updateMemberMutation.mutate(updatedForm, token, user?.email)
+    updateMemberMutation.mutate(updatedForm)
     navigate('/members')
   }
 
