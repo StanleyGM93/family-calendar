@@ -11,7 +11,11 @@ export async function getFamilyMemberById(id: number) {
   return response.body[0]
 }
 
-export async function addFamilyMember(newFamilyMember: NewMember) {
+export async function addFamilyMember(
+  newFamilyMember: NewMember,
+  token: string,
+  userEmail: string
+) {
   const response = await request.post('/api/v1/members').send(newFamilyMember)
   return response.statusCode
 }

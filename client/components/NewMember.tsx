@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { NewMember as NewMemberType } from '../../models/family-members'
+import type {
+  NewMember,
+  NewMember as NewMemberType,
+} from '../../models/family-members'
 import { addFamilyMember } from '../apis/members'
 import {
   Box,
@@ -21,11 +24,20 @@ const initialData = {
 function NewMember() {
   const [formData, setFormData] = useState<NewMemberType>(initialData)
   const queryClient = useQueryClient()
-  const newItemMutation = useMutation(addFamilyMember, {
+  const newItemMutation = useMutation(addFamilyMemberWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+
   // Auth0 info
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
+
+  async function addFamilyMemberWrapper(
+    updatedFamilyMember: NewMember
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return addFamilyMember(updatedFamilyMember, token, userEmail)
+  }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
