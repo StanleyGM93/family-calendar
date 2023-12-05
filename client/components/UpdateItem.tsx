@@ -11,8 +11,8 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ListItem } from '../../models/list.ts'
-import { getListItemById, updateListItem } from '../apis/list'
+import { ListItem, ListUpdate, ListUpdatePayload } from '../../models/list.ts'
+import { getListItemById, updateListItem } from '../apis/list.ts'
 
 function UpdateItem() {
   const { id } = useParams()
@@ -21,7 +21,7 @@ function UpdateItem() {
     ['appointment'],
     () => getListItemById(Number(id))
   )
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
 
   const initialFormData = {
     item: listItemData?.item || '',
@@ -30,9 +30,17 @@ function UpdateItem() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateItemMutation = useMutation(updateListItem, {
+  const updateItemMutation = useMutation(updateItemWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+
+  async function updateItemWrapper(
+    updatedListItemInfo: ListUpdatePayload
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return updateListItem(updatedListItemInfo, token, userEmail)
+  }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target

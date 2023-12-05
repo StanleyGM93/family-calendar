@@ -19,7 +19,9 @@ export async function addListItem(newListItem: NewListItem) {
 }
 
 export async function updateListItem(
-  listItemInfo: ListUpdatePayload
+  listItemInfo: ListUpdatePayload,
+  token: string,
+  userEmail: string
 ): Promise<number> {
   const { id, data } = listItemInfo
   const response = await request.patch(`${url}${id}`).send(data)
