@@ -13,7 +13,11 @@ export async function getListItemById(id: number): Promise<ListItem> {
   return response.body[0]
 }
 
-export async function addListItem(newListItem: NewListItem) {
+export async function addListItem(
+  newListItem: NewListItem,
+  token: string,
+  userEmail: string
+) {
   const response = await request.post(`${url}/item`).send(newListItem)
   return response.statusCode
 }
