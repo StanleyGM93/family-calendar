@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { Appointment } from '../../models/appointments.ts'
+import { Appointment, UpdatedAppointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 import { Member } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
@@ -34,7 +34,7 @@ function UpdateAppointment() {
     isError: membersIsError,
     error: membersError,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
 
   const initialFormData = {
     memberId: appointmentToUpdate?.memberId || '',
@@ -45,7 +45,7 @@ function UpdateAppointment() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateAppointmentMutation = useMutation(updateAppointment, {
+  const updateAppointmentMutation = useMutation(updateAppointmentWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
@@ -72,6 +72,14 @@ function UpdateAppointment() {
 
   if (!appointmentToUpdate || !members) {
     return <div>Could not retrieve appointments</div>
+  }
+
+  async function updateAppointmentWrapper(
+    updatedFamilyMember: UpdatedAppointment
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return updateAppointment(updatedFamilyMember, token, userEmail)
   }
 
   function handleChange(
