@@ -11,7 +11,11 @@ export async function getAppointmentById(id: number) {
   return response.body[0]
 }
 
-export async function addAppointment(newAppointment: NewAppointment) {
+export async function addAppointment(
+  newAppointment: NewAppointment,
+  token: string,
+  userEmail: string
+) {
   const response = await request
     .post('/api/v1/appointments')
     .send(newAppointment)

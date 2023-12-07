@@ -25,7 +25,7 @@ const initialData = {
 function NewAppointment() {
   const [formData, setFormData] = useState<NewAppointmentType>(initialData)
   const queryClient = useQueryClient()
-  const newAppointmentMutation = useMutation(addAppointment, {
+  const newAppointmentMutation = useMutation(addAppointmentWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
   const {
@@ -34,10 +34,18 @@ function NewAppointment() {
     error,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
   // Auth0 info
-  const { getAccessTokenSilently } = useAuth0()
+  const { getAccessTokenSilently, user } = useAuth0()
 
   if (isError) {
     return <div>There was an error: {error?.message}</div>
+  }
+
+  async function addAppointmentWrapper(
+    updatedFamilyMember: NewAppointmentType
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return addAppointment(updatedFamilyMember, token, userEmail)
   }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
