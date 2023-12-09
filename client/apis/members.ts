@@ -16,7 +16,10 @@ export async function addFamilyMember(
   token: string,
   userEmail: string
 ) {
-  const response = await request.post('/api/v1/members').send(newFamilyMember)
+  const response = await request
+    .post(`/api/v1/members/${userEmail}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(newFamilyMember)
   return response.statusCode
 }
 
@@ -27,7 +30,10 @@ export async function updateFamilyMember(
 ) {
   const { data } = updatedFamilyMember
   const { id } = data
-  const response = await request.patch(`/api/v1/members/${id}`).send(data)
+  const response = await request
+    .patch(`/api/v1/members/${id}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(data)
   return response.statusCode
 }
 
