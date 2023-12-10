@@ -17,7 +17,8 @@ export async function addAppointment(
   userEmail: string
 ) {
   const response = await request
-    .post('/api/v1/appointments')
+    .post(`/api/v1/appointments/${userEmail}`)
+    .set('Authorization', 'Bearer' + token)
     .send(newAppointment)
   console.log(newAppointment)
   console.log(response.statusCode)
@@ -31,6 +32,7 @@ export async function updateAppointment(
 ) {
   const response = await request
     .patch(`/api/v1/appointments/`)
+    .set('Authorization', 'Bearer' + token)
     .send(updatedAppointment)
   return response.statusCode
 }
