@@ -18,7 +18,10 @@ export async function addListItem(
   token: string,
   userEmail: string
 ) {
-  const response = await request.post(`${url}/item`).send(newListItem)
+  const response = await request
+    .post(`${url}/item/${userEmail}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(newListItem)
   return response.statusCode
 }
 
@@ -28,7 +31,10 @@ export async function updateListItem(
   userEmail: string
 ): Promise<number> {
   const { id, data } = listItemInfo
-  const response = await request.patch(`${url}${id}`).send(data)
+  const response = await request
+    .patch(`${url}${id}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(data)
   return response.statusCode
 }
 
