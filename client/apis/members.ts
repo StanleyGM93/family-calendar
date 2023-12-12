@@ -25,8 +25,7 @@ export async function addFamilyMember(
 
 export async function updateFamilyMember(
   updatedFamilyMember: MemberUpdate,
-  token: string,
-  userEmail: string
+  token: string
 ) {
   const { data } = updatedFamilyMember
   const { id } = data

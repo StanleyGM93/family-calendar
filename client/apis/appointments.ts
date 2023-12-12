@@ -27,8 +27,7 @@ export async function addAppointment(
 
 export async function updateAppointment(
   updatedAppointment: UpdatedAppointment,
-  token: string,
-  userEmail: string
+  token: string
 ) {
   const response = await request
     .patch(`/api/v1/appointments/`)

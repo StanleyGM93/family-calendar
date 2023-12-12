@@ -27,8 +27,7 @@ export async function addListItem(
 
 export async function updateListItem(
   listItemInfo: ListUpdatePayload,
-  token: string,
-  userEmail: string
+  token: string
 ): Promise<number> {
   const { id, data } = listItemInfo
   const response = await request
