@@ -26,7 +26,7 @@ function UpdateMember() {
     getFamilyMemberById(Number(id))
   )
   // Auth0 info
-  const { getAccessTokenSilently, user } = useAuth0()
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     name: memberToUpdate?.name || '',
@@ -66,8 +66,7 @@ function UpdateMember() {
     updatedFamilyMember: MemberUpdate
   ): Promise<number> {
     const token = await getAccessTokenSilently()
-    const userEmail = user?.email || ''
-    return updateFamilyMember(updatedFamilyMember, token, userEmail)
+    return updateFamilyMember(updatedFamilyMember, token)
   }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -84,8 +83,6 @@ function UpdateMember() {
     const updatedForm = {
       data: { id: Number(id), ...formData },
     }
-    const token = await getAccessTokenSilently()
-    console.log(token)
     updateMemberMutation.mutate(updatedForm)
     navigate('/members')
   }

@@ -34,7 +34,7 @@ function UpdateAppointment() {
     isError: membersIsError,
     error: membersError,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
-  const { getAccessTokenSilently, user } = useAuth0()
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     memberId: appointmentToUpdate?.memberId || '',
@@ -78,8 +78,7 @@ function UpdateAppointment() {
     updatedFamilyMember: UpdatedAppointment
   ): Promise<number> {
     const token = await getAccessTokenSilently()
-    const userEmail = user?.email || ''
-    return updateAppointment(updatedFamilyMember, token, userEmail)
+    return updateAppointment(updatedFamilyMember, token)
   }
 
   function handleChange(
@@ -105,8 +104,6 @@ function UpdateAppointment() {
             : formData.memberId,
       },
     }
-    const token = await getAccessTokenSilently()
-    console.log(token)
     updateAppointmentMutation.mutate(updatedForm)
     navigate('/appointments')
   }
