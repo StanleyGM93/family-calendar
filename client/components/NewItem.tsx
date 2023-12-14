@@ -40,9 +40,6 @@ function NewItem() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     newItemMutation.mutate(formData)
-    const token = await getAccessTokenSilently()
-    console.log(token)
-
     setFormData(initialData)
   }
 

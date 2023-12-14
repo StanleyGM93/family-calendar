@@ -51,9 +51,6 @@ function NewAppointment() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     newAppointmentMutation.mutate(formData)
-    const token = await getAccessTokenSilently()
-    console.log(token)
-
     setFormData(initialData)
   }
 
