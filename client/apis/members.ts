@@ -23,6 +23,7 @@ export async function addFamilyMember(
   return response.statusCode
 }
 
+// Do I want the user email included in path?
 export async function updateFamilyMember(
   updatedFamilyMember: MemberUpdate,
   token: string

@@ -25,6 +25,7 @@ export async function addListItem(
   return response.statusCode
 }
 
+// Do I want the user email included in path?
 export async function updateListItem(
   listItemInfo: ListUpdatePayload,
   token: string

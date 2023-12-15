@@ -25,6 +25,7 @@ export async function addAppointment(
   return response.statusCode
 }
 
+// Do I want the user email included in path?
 export async function updateAppointment(
   updatedAppointment: UpdatedAppointment,
   token: string
