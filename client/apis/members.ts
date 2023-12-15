@@ -11,14 +11,29 @@ export async function getFamilyMemberById(id: number) {
   return response.body[0]
 }
 
-export async function addFamilyMember(newFamilyMember: NewMember) {
-  const response = await request.post('/api/v1/members').send(newFamilyMember)
+export async function addFamilyMember(
+  newFamilyMember: NewMember,
+  token: string,
+  userEmail: string
+) {
+  const response = await request
+    .post(`/api/v1/members/${userEmail}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(newFamilyMember)
   return response.statusCode
 }
 
-export async function updateFamilyMember(updatedFamilyMember: MemberUpdate) {
-  const { id, data } = updatedFamilyMember
-  const response = await request.patch(`/api/v1/members/${id}`).send(data)
+// Do I want the user email included in path?
+export async function updateFamilyMember(
+  updatedFamilyMember: MemberUpdate,
+  token: string
+) {
+  const { data } = updatedFamilyMember
+  const { id } = data
+  const response = await request
+    .patch(`/api/v1/members/${id}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(data)
   return response.statusCode
 }
 

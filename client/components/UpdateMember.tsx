@@ -1,9 +1,8 @@
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useEffect, useState } from 'react'
-import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
-import { useParams, useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
-import { Member as MemberType } from '../../models/family-members'
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Box,
   Button,
@@ -12,6 +11,8 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
+import { Member as MemberType, MemberUpdate } from '../../models/family-members'
+import { getFamilyMemberById, updateFamilyMember } from '../apis/members'
 
 function UpdateMember() {
   const { id } = useParams()
@@ -24,6 +25,8 @@ function UpdateMember() {
   } = useQuery<MemberType, Error>(['member'], () =>
     getFamilyMemberById(Number(id))
   )
+  // Auth0 info
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     name: memberToUpdate?.name || '',
@@ -33,7 +36,7 @@ function UpdateMember() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateMemberMutation = useMutation(updateFamilyMember, {
+  const updateMemberMutation = useMutation(updateFamilyMemberWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
@@ -59,6 +62,13 @@ function UpdateMember() {
     return <p>Could not retrieve family members</p>
   }
 
+  async function updateFamilyMemberWrapper(
+    updatedFamilyMember: MemberUpdate
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    return updateFamilyMember(updatedFamilyMember, token)
+  }
+
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
     const updatedValues = {
@@ -68,11 +78,10 @@ function UpdateMember() {
     setFormData(updatedValues)
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = {
-      id: Number(id),
-      data: { ...formData },
+      data: { id: Number(id), ...formData },
     }
     updateMemberMutation.mutate(updatedForm)
     navigate('/members')

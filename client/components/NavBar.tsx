@@ -1,3 +1,4 @@
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Button,
   Flex,
@@ -9,11 +10,10 @@ import {
   Tabs,
   Text,
 } from '@chakra-ui/react'
-import { useAuth0 } from '@auth0/auth0-react'
 
 import { Link } from 'react-router-dom'
-import ColorToggleButton from './ColorMode'
 import { IfAuthenticated, IfNotAuthenticated } from './Authenticated.tsx'
+import ColorToggleButton from './ColorMode'
 
 function NavBar() {
   const { logout, loginWithRedirect, user } = useAuth0()

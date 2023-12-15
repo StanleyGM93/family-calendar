@@ -1,6 +1,9 @@
 import { useState } from 'react'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import type { NewMember as NewMemberType } from '../../models/family-members'
+import type {
+  NewMember,
+  NewMember as NewMemberType,
+} from '../../models/family-members'
 import { addFamilyMember } from '../apis/members'
 import {
   Box,
@@ -10,6 +13,7 @@ import {
   Heading,
   Input,
 } from '@chakra-ui/react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 const initialData = {
   name: '',
@@ -20,16 +24,27 @@ const initialData = {
 function NewMember() {
   const [formData, setFormData] = useState<NewMemberType>(initialData)
   const queryClient = useQueryClient()
-  const newItemMutation = useMutation(addFamilyMember, {
+  const newItemMutation = useMutation(addFamilyMemberWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+
+  // Auth0 info
+  const { getAccessTokenSilently, user } = useAuth0()
+
+  async function addFamilyMemberWrapper(
+    updatedFamilyMember: NewMember
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    const userEmail = user?.email || ''
+    return addFamilyMember(updatedFamilyMember, token, userEmail)
+  }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
     setFormData({ ...formData, [name]: value })
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     newItemMutation.mutate(formData)
     setFormData(initialData)

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useQueryClient, useMutation, useQuery } from '@tanstack/react-query'
 import { useParams, useNavigate } from 'react-router-dom'
 
-import { Appointment } from '../../models/appointments.ts'
+import { Appointment, UpdatedAppointment } from '../../models/appointments.ts'
 import { updateAppointment, getAppointmentById } from '../apis/appointments.ts'
 import { Member } from '../../models/family-members.ts'
 import { getAllFamilyMembers } from '../apis/members.ts'
@@ -15,6 +15,7 @@ import {
   Input,
   Select,
 } from '@chakra-ui/react'
+import { useAuth0 } from '@auth0/auth0-react'
 
 function UpdateAppointment() {
   const { id } = useParams()
@@ -33,6 +34,7 @@ function UpdateAppointment() {
     isError: membersIsError,
     error: membersError,
   } = useQuery<Member[], Error>(['family-members'], getAllFamilyMembers)
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     memberId: appointmentToUpdate?.memberId || '',
@@ -43,7 +45,7 @@ function UpdateAppointment() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateAppointmentMutation = useMutation(updateAppointment, {
+  const updateAppointmentMutation = useMutation(updateAppointmentWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
 
@@ -72,6 +74,13 @@ function UpdateAppointment() {
     return <div>Could not retrieve appointments</div>
   }
 
+  async function updateAppointmentWrapper(
+    updatedFamilyMember: UpdatedAppointment
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    return updateAppointment(updatedFamilyMember, token)
+  }
+
   function handleChange(
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) {
@@ -83,7 +92,7 @@ function UpdateAppointment() {
     setFormData(updatedValues)
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = {
       id: Number(id),

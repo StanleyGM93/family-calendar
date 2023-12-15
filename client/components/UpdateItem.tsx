@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
 import { useState } from 'react'
 
+import { useAuth0 } from '@auth0/auth0-react'
 import {
   Box,
   Button,
@@ -10,8 +11,8 @@ import {
   Input,
 } from '@chakra-ui/react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { ListItem } from '../../models/list.ts'
-import { getListItemById, updateListItem } from '../apis/list'
+import { ListItem, ListUpdatePayload } from '../../models/list.ts'
+import { getListItemById, updateListItem } from '../apis/list.ts'
 
 function UpdateItem() {
   const { id } = useParams()
@@ -20,6 +21,7 @@ function UpdateItem() {
     ['appointment'],
     () => getListItemById(Number(id))
   )
+  const { getAccessTokenSilently } = useAuth0()
 
   const initialFormData = {
     item: listItemData?.item || '',
@@ -28,9 +30,16 @@ function UpdateItem() {
 
   const [formData, setFormData] = useState(initialFormData)
   const queryClient = useQueryClient()
-  const updateItemMutation = useMutation(updateListItem, {
+  const updateItemMutation = useMutation(updateItemWrapper, {
     onSuccess: () => queryClient.invalidateQueries(),
   })
+
+  async function updateItemWrapper(
+    updatedListItemInfo: ListUpdatePayload
+  ): Promise<number> {
+    const token = await getAccessTokenSilently()
+    return updateListItem(updatedListItemInfo, token)
+  }
 
   function handleChange(event: React.ChangeEvent<HTMLInputElement>) {
     const { name, value } = event.target
@@ -41,7 +50,7 @@ function UpdateItem() {
     setFormData(updatedValues)
   }
 
-  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedListItemInfo = {
       id: Number(id),

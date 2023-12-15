@@ -13,16 +13,28 @@ export async function getListItemById(id: number): Promise<ListItem> {
   return response.body[0]
 }
 
-export async function addListItem(newListItem: NewListItem) {
-  const response = await request.post(`${url}/item`).send(newListItem)
+export async function addListItem(
+  newListItem: NewListItem,
+  token: string,
+  userEmail: string
+) {
+  const response = await request
+    .post(`${url}/item/${userEmail}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(newListItem)
   return response.statusCode
 }
 
+// Do I want the user email included in path?
 export async function updateListItem(
-  listItemInfo: ListUpdatePayload
+  listItemInfo: ListUpdatePayload,
+  token: string
 ): Promise<number> {
   const { id, data } = listItemInfo
-  const response = await request.patch(`${url}${id}`).send(data)
+  const response = await request
+    .patch(`${url}${id}`)
+    .set('Authorization', 'Bearer' + token)
+    .send(data)
   return response.statusCode
 }
 
