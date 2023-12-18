@@ -19,7 +19,8 @@ if (process.env.NODE_ENV === 'production') {
 }
 
 // Adding auth0 check to all endpoints
-server.use(checkJwt)
+// server.use(checkJwt)
+
 // Different routes set up
 server.use('/api/v1/list', listRouter)
 server.use('/api/v1/appointments', appointmentsRouter)

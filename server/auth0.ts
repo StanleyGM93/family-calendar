@@ -7,6 +7,9 @@ import jwks from 'jwks-rsa'
 const domain = 'https://mako-stanley.au.auth0.com'
 const audience = 'https://family-calendar/api'
 
+console.log(domain)
+console.log(audience)
+
 const checkJwt = jwt({
   secret: jwks.expressJwtSecret({
     cache: true,
@@ -18,6 +21,8 @@ const checkJwt = jwt({
   issuer: `${domain}/`,
   algorithms: ['RS256'],
 })
+
+console.log(checkJwt)
 
 export default checkJwt
 

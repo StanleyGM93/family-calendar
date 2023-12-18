@@ -1,10 +1,13 @@
 import express from 'express'
 import * as appointmentsDb from '../db/appointments-db.ts'
+import checkJwt, { JwtRequest } from '../auth0.ts'
 
 const router = express.Router()
 
 // GET /appointments
-router.get('/', async (req, res) => {
+router.get('/', checkJwt, async (req: JwtRequest, res) => {
+  const auth0Id = req.auth?.sub
+  console.log(auth0Id)
   try {
     const allAppointments = await appointmentsDb.getAllAppointments()
     res.json(allAppointments)
