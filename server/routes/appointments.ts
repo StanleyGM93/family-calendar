@@ -4,8 +4,11 @@ import checkJwt, { JwtRequest } from '../auth0.ts'
 
 const router = express.Router()
 
+// Only add checkJwt to post and patch routes
+// Need to fix up routes to include user info
+
 // GET /appointments
-router.get('/', checkJwt, async (req: JwtRequest, res) => {
+router.get('/', async (req: JwtRequest, res) => {
   const auth0Id = req.auth?.sub
   console.log(auth0Id)
   try {
@@ -54,7 +57,7 @@ router.patch('/', async (req, res) => {
 })
 
 // Post /appointments/
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req, res) => {
   const newAppointment = req.body
   try {
     const returnAppt = await appointmentsDb.addAppointment(newAppointment)
