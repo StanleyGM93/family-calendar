@@ -1,5 +1,6 @@
 import express from 'express'
 import * as listDb from '../db/list-db.ts'
+import checkJwt from '../auth0.ts'
 
 const router = express.Router()
 
@@ -35,7 +36,7 @@ router.get('/:itemId', async (req, res) => {
 })
 
 // Patch /list/:itemId
-router.patch('/:itemId', async (req, res) => {
+router.patch('/:itemId', checkJwt, async (req, res) => {
   const itemId = Number(req.params.itemId)
   const updatedItem = req.body
   try {
@@ -52,7 +53,7 @@ router.patch('/:itemId', async (req, res) => {
 })
 
 // Post /list/item
-router.post('/item', async (req, res) => {
+router.post('/item', checkJwt, async (req, res) => {
   const itemToAdd = req.body
   try {
     await listDb.addListItem(itemToAdd)

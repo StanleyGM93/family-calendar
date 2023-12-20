@@ -41,7 +41,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Patch /appointments/
-router.patch('/', async (req, res) => {
+router.patch('/', checkJwt, async (req, res) => {
   const updatedAppointment = req.body
   try {
     await appointmentsDb.updateAppointment(updatedAppointment)

@@ -1,5 +1,6 @@
 import express from 'express'
 import * as memberDb from '../db/members-db.ts'
+import checkJwt from '../auth0.ts'
 
 const router = express.Router()
 
@@ -35,7 +36,7 @@ router.get('/:id', async (req, res) => {
 })
 
 // Patch /members/:id
-router.patch('/:id', async (req, res) => {
+router.patch('/:id', checkJwt, async (req, res) => {
   const memberId = Number(req.params.id)
   const updatedFamilyMember = req.body
   try {
@@ -52,7 +53,7 @@ router.patch('/:id', async (req, res) => {
 })
 
 // Post /members/
-router.post('/', async (req, res) => {
+router.post('/', checkJwt, async (req, res) => {
   const familyMemberToAdd = req.body
   try {
     await memberDb.addFamilyMember(familyMemberToAdd)
