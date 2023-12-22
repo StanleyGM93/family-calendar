@@ -42,6 +42,8 @@ router.get('/:id', async (req, res) => {
 
 // Patch /appointments/
 router.patch('/:userEmail', checkJwt, async (req, res) => {
+  const userEmail = req.params.userEmail
+  console.log(userEmail)
   const updatedAppointment = req.body
   try {
     await appointmentsDb.updateAppointment(updatedAppointment)
@@ -58,6 +60,8 @@ router.patch('/:userEmail', checkJwt, async (req, res) => {
 
 // Post /appointments/
 router.post('/:userEmail', checkJwt, async (req, res) => {
+  const userEmail = req.params.userEmail
+  console.log(userEmail)
   const newAppointment = req.body
   try {
     const returnAppt = await appointmentsDb.addAppointment(newAppointment)

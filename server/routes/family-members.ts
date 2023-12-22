@@ -54,6 +54,8 @@ router.patch('/:id', checkJwt, async (req, res) => {
 
 // Post /members/
 router.post('/:userEmail', checkJwt, async (req, res) => {
+  const userEmail = req.params.userEmail
+  console.log(userEmail)
   const familyMemberToAdd = req.body
   try {
     await memberDb.addFamilyMember(familyMemberToAdd)
