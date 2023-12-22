@@ -53,7 +53,7 @@ router.patch('/:itemId', checkJwt, async (req, res) => {
 })
 
 // Post /list/item
-router.post('/item', checkJwt, async (req, res) => {
+router.post('/item/:userEmail', checkJwt, async (req, res) => {
   const itemToAdd = req.body
   try {
     await listDb.addListItem(itemToAdd)
