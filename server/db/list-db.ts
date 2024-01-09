@@ -33,7 +33,8 @@ export function updateListItemById(
   return db('shopping_list').update(updatedItem).where('id', id)
 }
 
-export function addListItem(listItem: NewListItem) {
+// Include userEmail as part of entry
+export function addListItem(userEmail: string, listItem: NewListItem) {
   const createdAt = Date.now()
   const itemToAdd = {
     ...listItem,

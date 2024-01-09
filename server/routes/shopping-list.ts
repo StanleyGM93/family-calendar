@@ -58,7 +58,7 @@ router.post('/item/:userEmail', checkJwt, async (req, res) => {
   console.log(userEmail)
   const itemToAdd = req.body
   try {
-    await listDb.addListItem(itemToAdd)
+    await listDb.addListItem(userEmail, itemToAdd)
     res.sendStatus(201)
   } catch (e) {
     console.error(e)
