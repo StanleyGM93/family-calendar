@@ -34,12 +34,14 @@ export function updateListItemById(
 }
 
 // Include userEmail as part of entry
+// Need to work out user_id based off the email supplied
 export function addListItem(userEmail: string, listItem: NewListItem) {
   const createdAt = Date.now()
   const itemToAdd = {
     ...listItem,
     created_at: createdAt,
     user_id: listItem.userId,
+    user_email: userEmail,
   }
   delete itemToAdd.userId
   return db('shopping_list').insert(itemToAdd)
