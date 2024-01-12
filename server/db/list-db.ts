@@ -1,5 +1,6 @@
 import db from './connection'
 import { ListItem, ListUpdate, NewListItem } from '../../models/list'
+import { getUserIdByEmail } from './utils.ts'
 
 // table name = shopping_list
 
@@ -37,10 +38,11 @@ export function updateListItemById(
 // Need to work out user_id based off the email supplied
 export function addListItem(userEmail: string, listItem: NewListItem) {
   const createdAt = Date.now()
+  const userId = getUserIdByEmail(userEmail)
   const itemToAdd = {
     ...listItem,
     created_at: createdAt,
-    user_id: listItem.userId,
+    user_id: userId,
     user_email: userEmail,
   }
   delete itemToAdd.userId
