@@ -39,13 +39,14 @@ export function updateListItemById(
 export function addListItem(userEmail: string, listItem: NewListItem) {
   const createdAt = Date.now()
   const userId = getUserIdByEmail(userEmail)
+  console.log(userId)
   const itemToAdd = {
     ...listItem,
     created_at: createdAt,
     user_id: userId,
     user_email: userEmail,
   }
-  delete itemToAdd.userId
+  // delete itemToAdd.userId -- unsure what this line did
   return db('shopping_list').insert(itemToAdd)
 }
 
