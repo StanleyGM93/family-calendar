@@ -4,6 +4,8 @@ import { ParamsDictionary } from 'express-serve-static-core'
 import { JwtPayload } from 'jsonwebtoken'
 import jwks from 'jwks-rsa'
 
+// Some issue with this. Get a 401 (unauthorized) error
+// when I try to use a backend route.
 const domain = 'https://mako-stanley.au.auth0.com'
 const audience = 'https://family-calendar/api'
 
