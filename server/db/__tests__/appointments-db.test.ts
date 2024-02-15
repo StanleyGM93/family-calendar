@@ -32,6 +32,35 @@ describe('getAppointmentById', () => {
   })
 })
 
+describe('updateAppointment', () => {
+  it('updates an appointment', async () => {
+    const fakeInfo = {
+      id: 1,
+      data: {
+        memberId: 1,
+        dateTime: 'updated date_time',
+        location: 'updated location',
+        purpose: 'updated purpose',
+      },
+    }
+    await db.updateAppointment(fakeInfo)
+
+    const updatedAppointment = await db.getAppointmenById(1)
+    expect(updatedAppointment[0].location).toBe('updated location')
+    expect(updatedAppointment).toMatchInlineSnapshot(`
+      [
+        {
+          "dateTime": "updated date_time",
+          "id": 1,
+          "location": "updated location",
+          "memberId": 1,
+          "purpose": "updated purpose",
+        },
+      ]
+    `)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
