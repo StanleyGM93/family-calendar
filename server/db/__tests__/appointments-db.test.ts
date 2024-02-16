@@ -61,6 +61,31 @@ describe('updateAppointment', () => {
   })
 })
 
+describe('addAppointment', () => {
+  it('adds a new appointment', async () => {
+    const newAppointment = {
+      memberId: 2,
+      dateTime: 'new date_time',
+      location: 'new location',
+      purpose: 'new purpose',
+    }
+    const addedAppointment = await db.addAppointment(newAppointment)
+
+    expect(Array.isArray(addedAppointment)).toBe(true)
+    expect(addedAppointment).toMatchInlineSnapshot(`
+      [
+        {
+          "date_time": "new date_time",
+          "id": 4,
+          "location": "new location",
+          "member_id": 2,
+          "purpose": "new purpose",
+        },
+      ]
+    `)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
