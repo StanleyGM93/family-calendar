@@ -86,6 +86,15 @@ describe('addAppointment', () => {
   })
 })
 
+describe('deleteAppointment', () => {
+  it('deletes an appointment', async () => {
+    await db.deleteAppointment(1)
+    const appointments = await db.getAllAppointments()
+
+    expect(appointments).toHaveLength(2)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
