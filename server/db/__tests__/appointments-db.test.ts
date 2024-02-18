@@ -88,9 +88,11 @@ describe('addAppointment', () => {
 
 describe('deleteAppointment', () => {
   it('deletes an appointment', async () => {
+    const appointmentToDelete = db.getAppointmenById(1)
     await db.deleteAppointment(1)
     const appointments = await db.getAllAppointments()
 
+    expect(appointmentToDelete).not.toBe(db.getAppointmenById(1))
     expect(appointments).toHaveLength(2)
   })
 })
