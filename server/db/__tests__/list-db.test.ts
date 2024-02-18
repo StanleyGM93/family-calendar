@@ -13,9 +13,11 @@ beforeEach(async () => {
 })
 
 describe('getAllListItems', () => {
-  it('returns an array of all list items', () => {
-    // Change the below statement
-    expect(true).toBe(true)
+  it('returns an array of all list items', async () => {
+    const allListItems = await db.getAllListItems()
+
+    expect(Array.isArray(allListItems)).toBe(true)
+    expect(allListItems).toHaveLength(3)
   })
 })
 //After all tests close the connection
