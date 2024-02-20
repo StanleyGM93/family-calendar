@@ -7,7 +7,7 @@ export interface NewListItem {
 export interface ListUpdate {
   id: number
   item: string
-  quantity: string
+  quantity: number
 }
 
 export interface ListItem extends NewListItem {

@@ -30,6 +30,23 @@ describe('getListItemById', () => {
     expect(listItem[0].id).toEqual(2)
   })
 })
+
+describe('updateListItemById', () => {
+  it('updates a list item based on its id', async () => {
+    const idToTest = 1
+    const fakeInfo = {
+      id: 1,
+      item: 'updated item',
+      quantity: 100,
+    }
+    await db.updateListItemById(idToTest, fakeInfo)
+
+    const updatedListItem = await db.getListItemById(idToTest)
+    expect(updatedListItem[0].userId).toEqual(1)
+    expect(updatedListItem[0].item).toBe('updated item')
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
