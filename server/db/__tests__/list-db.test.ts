@@ -47,6 +47,21 @@ describe('updateListItemById', () => {
   })
 })
 
+describe('addListItem', () => {
+  it('adds a new list item', async () => {
+    const newListItem = {
+      userId: 1,
+      item: 'new list item',
+      quantity: 5,
+    }
+    const addedListItem = await db.addListItem(newListItem)
+
+    expect(Array.isArray(addedListItem)).toBe(true)
+    // It's 4 because it's the 4th list item in db
+    expect(addedListItem[0]).toEqual(4)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
