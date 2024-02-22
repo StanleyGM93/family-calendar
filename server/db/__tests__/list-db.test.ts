@@ -62,6 +62,18 @@ describe('addListItem', () => {
   })
 })
 
+describe('deleteListItem', () => {
+  it('removes a list item', async () => {
+    const listItemToDelete = await db.getListItemById(1)
+    await db.deleteListItem(1)
+    const firstListItem = await db.getListItemById(1)
+    const allListItems = await db.getAllListItems()
+
+    expect(listItemToDelete).not.toBe(firstListItem)
+    expect(allListItems).toHaveLength(2)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
