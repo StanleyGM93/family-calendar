@@ -21,6 +21,16 @@ describe('getAllFamilyMembers', () => {
   })
 })
 
+describe('getFamilyMemberById', () => {
+  it('returns a single family member in an array', async () => {
+    const secondMember = await db.getFamilyMemberById(2)
+
+    expect(Array.isArray(secondMember)).toBe(true)
+    expect(secondMember[0].id).toBe(2)
+    expect(secondMember).toHaveLength(1)
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
