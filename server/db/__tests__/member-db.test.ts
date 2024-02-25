@@ -31,6 +31,22 @@ describe('getFamilyMemberById', () => {
   })
 })
 
+describe('updateFamilyMemberById', () => {
+  it('updates a family member and returns the updated info', async () => {
+    const updatedInfo = {
+      id: 1,
+      name: 'updated name',
+      relationship: 'updated relationship',
+    }
+
+    const updatedFamilyMember = await db.updateFamilyMemberById(1, updatedInfo)
+    console.log(updatedFamilyMember)
+    expect(Array.isArray(updatedFamilyMember)).toBe(true)
+    expect(updatedFamilyMember).toHaveLength(1)
+    expect(updatedFamilyMember).toMatchInlineSnapshot()
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
