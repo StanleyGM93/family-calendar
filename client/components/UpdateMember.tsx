@@ -81,7 +81,8 @@ function UpdateMember() {
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     const updatedForm = {
-      data: { id: Number(id), ...formData },
+      id: Number(id),
+      data: { ...formData },
     }
     updateMemberMutation.mutate(updatedForm)
     navigate('/members')

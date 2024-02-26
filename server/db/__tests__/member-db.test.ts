@@ -33,17 +33,21 @@ describe('getFamilyMemberById', () => {
 
 describe('updateFamilyMemberById', () => {
   it('updates a family member and returns the updated info', async () => {
-    const updatedInfo = {
+    const fakeUpdate = {
       id: 1,
-      name: 'updated name',
-      relationship: 'updated relationship',
+      data: {
+        name: 'updated name',
+        relationship: 'updated relationship',
+      },
     }
 
-    const updatedFamilyMember = await db.updateFamilyMemberById(1, updatedInfo)
+    await db.updateFamilyMemberById(fakeUpdate)
+
+    const updatedFamilyMember = await db.getFamilyMemberById(1)
     console.log(updatedFamilyMember)
     expect(Array.isArray(updatedFamilyMember)).toBe(true)
     expect(updatedFamilyMember).toHaveLength(1)
-    expect(updatedFamilyMember).toMatchInlineSnapshot()
+    expect(updatedFamilyMember[0].name).toEqual('updated name')
   })
 })
 
