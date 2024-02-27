@@ -51,6 +51,22 @@ describe('updateFamilyMemberById', () => {
   })
 })
 
+describe('addFamilyMember', () => {
+  it('adds a family member', async () => {
+    const newFamilyMember = {
+      userId: 1,
+      name: 'new family member',
+      relationship: 'new relationship',
+      dateOfBirth: 'new dob',
+    }
+    await db.addFamilyMember(newFamilyMember)
+
+    const addedFamilyMember = await db.getFamilyMemberById(4)
+
+    expect(addedFamilyMember[0].name).toBe('new family member')
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
