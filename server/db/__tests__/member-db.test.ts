@@ -67,6 +67,14 @@ describe('addFamilyMember', () => {
   })
 })
 
+describe('deleteFamilyMember', () => {
+  it('deletes a family member', async () => {
+    const memberToDelete = await db.deleteFamilyMember(3)
+
+    expect(memberToDelete).toThrowError()
+  })
+})
+
 //After all tests close the connection
 afterAll(async () => {
   await connection.destroy()
