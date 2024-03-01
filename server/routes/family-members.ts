@@ -34,12 +34,11 @@ router.get('/:id', async (req, res) => {
   }
 })
 
-// Patch /members/:id
-router.patch('/:id', async (req, res) => {
-  const memberId = Number(req.params.id)
+// Patch /members/
+router.patch('/', async (req, res) => {
   const updatedFamilyMember = req.body
   try {
-    await memberDb.updateFamilyMemberById(memberId, updatedFamilyMember)
+    await memberDb.updateFamilyMemberById(updatedFamilyMember)
     res.sendStatus(200)
   } catch (e) {
     console.error(e)

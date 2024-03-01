@@ -25,8 +25,15 @@ export function getFamilyMemberById(id: number): Promise<Member[]> {
     .where('id', id)
 }
 
-export function updateFamilyMemberById(id: number, updatedInfo: MemberUpdate) {
-  return db('family_members').update(updatedInfo).where('id', id)
+export function updateFamilyMemberById(updatedInfo: MemberUpdate) {
+  const { id, data } = updatedInfo
+  const { name, relationship, dateOfBirth } = data
+  const infoToUpdate = {
+    name,
+    relationship,
+    date_of_birth: dateOfBirth,
+  }
+  return db('family_members').update(infoToUpdate).where('id', id)
 }
 
 export function addFamilyMember(newFamilyMemberInfo: NewMember) {

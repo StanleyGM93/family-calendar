@@ -35,7 +35,6 @@ export function getAppointmenById(id: number) {
 
 export function updateAppointment(updatedInfo: UpdatedAppointment) {
   const { id, data } = updatedInfo
-  console.log(updatedInfo)
   const { memberId, dateTime, location, purpose } = data
   const infoToUpdate = {
     member_id: memberId,
