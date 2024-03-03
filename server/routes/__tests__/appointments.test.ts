@@ -33,4 +33,14 @@ describe('GET /api/v1/appointments/', () => {
     expect(response.status).toBe(200)
     expect(response.body).toHaveLength(2)
   })
+
+  it('should return 500 when an error occurs', async () => {
+    vi.mocked(db.getAllAppointments).mockImplementation(() => {
+      throw new Error('This throws an error')
+    })
+
+    const response = await request(server).get('/api/v1/appointments')
+
+    expect(response.statusCode).toBe(500)
+  })
 })
