@@ -75,3 +75,13 @@ describe('GET /api/v1/appointments/:id', () => {
     expect(response.statusCode).toBe(500)
   })
 })
+
+describe('PATCH /api/v1/appointments/', () => {
+  it('returns a status of 200 for a successful patch', async () => {
+    vi.mocked(db.updateAppointment).mockResolvedValue(1)
+
+    const response = await request(server).patch('/api/v1/appointments/')
+
+    expect(response.statusCode).toBe(200)
+  })
+})
