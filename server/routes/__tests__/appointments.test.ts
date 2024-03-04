@@ -64,4 +64,14 @@ describe('GET /api/v1/appointments/:id', () => {
     expect(Array.isArray(response.body)).toBe(true)
     expect(response.body[0].purpose).toEqual('fake purpose user 2')
   })
+
+  it('should return 500 when an error occurs', async () => {
+    vi.mocked(db.getAppointmenById).mockImplementation(() => {
+      throw new Error('This throwns an error')
+    })
+
+    const response = await request(server).get('/api/v1/appointments/2')
+
+    expect(response.statusCode).toBe(500)
+  })
 })
