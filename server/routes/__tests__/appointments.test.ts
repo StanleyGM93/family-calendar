@@ -44,3 +44,24 @@ describe('GET /api/v1/appointments/', () => {
     expect(response.statusCode).toBe(500)
   })
 })
+
+describe('GET /api/v1/appointments/:id', () => {
+  it('returns a single appointment', async () => {
+    vi.mocked(db.getAppointmenById).mockResolvedValue([
+      {
+        id: 2,
+        memberId: 2,
+        dateTime: 'fake date and time user 2',
+        location: 'fake location user 2',
+        purpose: 'fake purpose user 2',
+      },
+    ])
+
+    const response = await request(server).get('/api/v1/appointments/2')
+
+    expect(response.statusCode).toBe(200)
+    expect(db.getAppointmenById).toHaveBeenCalledWith(2)
+    expect(Array.isArray(response.body)).toBe(true)
+    expect(response.body[0].purpose).toEqual('fake purpose user 2')
+  })
+})
