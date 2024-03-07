@@ -84,4 +84,14 @@ describe('PATCH /api/v1/appointments/', () => {
 
     expect(response.statusCode).toBe(200)
   })
+
+  it('should return 500 when an error occurs', async () => {
+    vi.mocked(db.updateAppointment).mockImplementation(() => {
+      throw new Error('This throwns an error')
+    })
+
+    const response = await request(server).patch('/api/v1/appointments/')
+
+    expect(response.statusCode).toBe(500)
+  })
 })
