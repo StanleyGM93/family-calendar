@@ -95,3 +95,22 @@ describe('PATCH /api/v1/appointments/', () => {
     expect(response.statusCode).toBe(500)
   })
 })
+
+describe('POST /api/v1/appointments/', () => {
+  it('Adds a new appointment', async () => {
+    vi.mocked(db.addAppointment).mockResolvedValue([
+      {
+        date_time: 'new date_time',
+        id: 4,
+        location: 'new location',
+        member_id: 2,
+        purpose: 'new purpose',
+      },
+    ])
+
+    const response = await request(server).post('/api/v1/appointments/')
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body[0].location).toEqual('new location')
+  })
+})
