@@ -113,4 +113,14 @@ describe('POST /api/v1/appointments/', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body[0].location).toEqual('new location')
   })
+
+  it('should return 500 when an error occurs', async () => {
+    vi.mocked(db.addAppointment).mockImplementation(() => {
+      throw new Error('This throwns an error')
+    })
+
+    const response = await request(server).post('/api/v1/appointments/')
+
+    expect(response.statusCode).toBe(500)
+  })
 })
