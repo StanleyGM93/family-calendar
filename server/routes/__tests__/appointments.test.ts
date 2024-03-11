@@ -124,3 +124,13 @@ describe('POST /api/v1/appointments/', () => {
     expect(response.statusCode).toBe(500)
   })
 })
+
+describe('DELETE /api/v1/appointments/:id', () => {
+  it('deletes an appointment after given an id', async () => {
+    vi.mocked(db.deleteAppointment).mockResolvedValue(1)
+
+    const response = await request(server).delete('/api/v1/appointments/2')
+
+    expect(response.statusCode).toBe(204)
+  })
+})
