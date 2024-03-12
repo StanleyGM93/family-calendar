@@ -133,4 +133,14 @@ describe('DELETE /api/v1/appointments/:id', () => {
 
     expect(response.statusCode).toBe(204)
   })
+
+  it('should return 500 when an error occurs', async () => {
+    vi.mocked(db.deleteAppointment).mockImplementation(() => {
+      throw new Error('This throwns an error')
+    })
+
+    const response = await request(server).delete('/api/v1/appointments/1')
+
+    expect(response.statusCode).toBe(500)
+  })
 })
