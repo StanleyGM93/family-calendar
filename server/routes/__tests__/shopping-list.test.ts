@@ -10,8 +10,45 @@ beforeEach(async () => {
 })
 
 describe('GET /api/v1/list', () => {
-  it('should return all list items', async () => {
-    const mockListItems = [
+  const mockListItems = [
+    {
+      id: 1,
+      userId: 1,
+      item: 'bananas',
+      quantity: 3,
+      createdAt: new Date('2023/12/08T06:00:00'),
+    },
+    {
+      id: 2,
+      userId: 1,
+      item: 'apples',
+      quantity: 6,
+      createdAt: new Date('2023/12/08T06:00:00'),
+    },
+  ]
+
+  it('should return all list items successfully', async () => {
+    vi.mocked(db.getAllListItems).mockResolvedValue(mockListItems)
+
+    const response = await request(server).get('/api/v1/list/')
+
+    expect(response.status).toBe(200)
+    expect(response.body).toHaveLength(mockListItems.length)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.getAllListItems).mockRejectedValue(new Error('Database error'))
+
+    const response = await request(server).get('/api/v1/list/')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
+
+describe('GET /api/v1/list/:itemId', () => {
+  it('returns a single list item', async () => {
+    const mockListItem = [
       {
         id: 1,
         userId: 1,
@@ -19,33 +56,13 @@ describe('GET /api/v1/list', () => {
         quantity: 3,
         createdAt: new Date('2023/12/08T06:00:00'),
       },
-      {
-        id: 2,
-        userId: 1,
-        item: 'apples',
-        quantity: 6,
-        createdAt: new Date('2023/12/08T06:00:00'),
-      },
     ]
 
-    it('should return all list items successfully', async () => {
-      vi.mocked(db.getAllListItems).mockResolvedValue(mockListItems)
+    vi.mocked(db.getListItemById).mockResolvedValue(mockListItem)
 
-      const response = await request(server).get('/api/v1/list/')
+    const response = await request(server).get('/api/v1/list/1')
 
-      expect(response.status).toBe(200)
-      expect(response.body).toHaveLength(mockListItems.length)
-    })
-
-    it('should handle errors properly', async () => {
-      vi.mocked(db.getAllListItems).mockRejectedValue(
-        new Error('Database error')
-      )
-
-      const response = await request(server).get('/api/v1/list/')
-
-      expect(response.status).toBe(500)
-      expect(response.text).toBe('Database error')
-    })
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toHaveLength(1)
   })
 })
