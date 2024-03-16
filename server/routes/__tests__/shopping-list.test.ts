@@ -65,4 +65,13 @@ describe('GET /api/v1/list/:itemId', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toHaveLength(1)
   })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.getListItemById).mockRejectedValue(new Error('Database error'))
+
+    const response = await request(server).get('/api/v1/list/2')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
 })
