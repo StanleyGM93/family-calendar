@@ -75,3 +75,13 @@ describe('GET /api/v1/list/:itemId', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('PATCH /api/v1/list/:itemId', () => {
+  it('returns a status code of 200 if successful', async () => {
+    vi.mocked(db.updateListItemById).mockResolvedValue([1])
+
+    const response = await request(server).patch('/api/v1/list/2')
+
+    expect(response.statusCode).toBe(200)
+  })
+})
