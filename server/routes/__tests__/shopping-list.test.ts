@@ -96,3 +96,22 @@ describe('PATCH /api/v1/list/:itemId', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('POST /api/v1/list/item', () => {
+  it('returns a status code of 201 if succesful', async () => {
+    vi.mocked(db.addListItem).mockResolvedValue([1])
+
+    const response = await request(server).post('/api/v1/list/item')
+
+    expect(response.statusCode).toBe(201)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.addListItem).mockRejectedValue(new Error('Database error'))
+
+    const response = await request(server).post('/api/v1/list/item')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
