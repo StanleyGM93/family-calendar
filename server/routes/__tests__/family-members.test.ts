@@ -35,4 +35,14 @@ describe('GET /api/v1/members', () => {
     expect(response.statusCode).toBe(200)
     expect(response.body).toHaveLength(mockFamilyMembers.length)
   })
+  it('should handle errors properly', async () => {
+    vi.mocked(db.getAllFamilyMembers).mockRejectedValue(
+      new Error('Database error')
+    )
+
+    const response = await request(server).get('/api/v1/members/')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
 })
