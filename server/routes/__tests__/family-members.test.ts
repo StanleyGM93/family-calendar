@@ -46,3 +46,35 @@ describe('GET /api/v1/members', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('GET /api/v1/members/:id', () => {
+  it('returns a single member based on id', async () => {
+    const mockFamilyMember = [
+      {
+        id: 2,
+        userId: 1,
+        name: 'Gobbler',
+        relationship: 'sister',
+        dateOfBirth: '1960 / 12 / 7',
+      },
+    ]
+
+    vi.mocked(db.getFamilyMemberById).mockResolvedValue(mockFamilyMember)
+
+    const response = await request(server).get('/api/v1/members/2')
+
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toHaveLength(1)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.getFamilyMemberById).mockRejectedValue(
+      new Error('Database error')
+    )
+
+    const response = await request(server).get('/api/v1/members/2')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
