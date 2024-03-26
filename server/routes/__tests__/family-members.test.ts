@@ -78,3 +78,24 @@ describe('GET /api/v1/members/:id', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('PATCH /api/v1/members/', () => {
+  it('returns a status code of 200 if successful', async () => {
+    vi.mocked(db.updateFamilyMemberById).mockResolvedValue(1)
+
+    const response = await request(server).patch('/api/v1/members')
+
+    expect(response.statusCode).toBe(200)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.updateFamilyMemberById).mockRejectedValue(
+      new Error('Database error')
+    )
+
+    const response = await request(server).patch('/api/v1/members')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
