@@ -99,3 +99,22 @@ describe('PATCH /api/v1/members/', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('POST /api/v1/members/', () => {
+  it('returns a status code of 201 if succesful', async () => {
+    vi.mocked(db.addFamilyMember).mockResolvedValue([1])
+
+    const response = await request(server).post('/api/v1/members')
+
+    expect(response.statusCode).toBe(201)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.addFamilyMember).mockRejectedValue(new Error('Database error'))
+
+    const response = await request(server).post('/api/v1/members')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
