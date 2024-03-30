@@ -118,3 +118,24 @@ describe('POST /api/v1/members/', () => {
     expect(response.text).toBe('Database error')
   })
 })
+
+describe('DELETE /api/v1/members/:id', () => {
+  it('deletes a list item', async () => {
+    vi.mocked(db.deleteFamilyMember).mockResolvedValue(1)
+
+    const response = await request(server).delete('/api/v1/members/3')
+
+    expect(response.statusCode).toBe(204)
+  })
+
+  it('should handle errors properly', async () => {
+    vi.mocked(db.deleteFamilyMember).mockRejectedValue(
+      new Error('Database error')
+    )
+
+    const response = await request(server).delete('/api/v1/members/3')
+
+    expect(response.status).toBe(500)
+    expect(response.text).toBe('Database error')
+  })
+})
