@@ -1,2 +1,3 @@
 1. Trying to use a SQlite tool to drop the db as the migration rollback fails
 2. Downlaoded DB Browser for SQlite but the db is locked.
+3. Tried to delete the db usign sqlite3 cli
