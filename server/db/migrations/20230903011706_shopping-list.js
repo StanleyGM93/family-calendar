@@ -5,7 +5,7 @@
 export function up(knex) {
   return knex.schema.createTable('shopping_list', (table) => {
     table.increments('id').primary()
-    table.integer('user_id').references('id').inTable('users')
+    // table.integer('user_id').references('id').inTable('users')
     table.string('item')
     table.integer('quantity')
     table.dateTime('created_at').defaultTo(knex.fn.now())
