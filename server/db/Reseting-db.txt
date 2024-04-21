@@ -2,3 +2,5 @@
 2. Downlaoded DB Browser for SQlite but the db is locked.
 3. Tried to delete the db usign sqlite3 cli
 4. Need to fix knex schema to avoid conflict in future
+5. Update the knex migration files.
+6. Run new migrations and seeds.
