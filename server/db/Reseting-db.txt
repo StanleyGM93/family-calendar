@@ -4,3 +4,4 @@
 4. Need to fix knex schema to avoid conflict in future
 5. Update the knex migration files.
 6. Run new migrations and seeds.
+7. Rerun tests - these passed. Time to investigate.
